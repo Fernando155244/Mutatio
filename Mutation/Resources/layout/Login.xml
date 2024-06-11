@@ -9,55 +9,55 @@
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/linearLayout1"
+        android:id="@+id/lyLogin"
         android:gravity="center">
         <ImageView
             android:src="@android:drawable/ic_menu_gallery"
             android:layout_width="380.0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView1" />
+            android:id="@+id/imgLoginLogo" />
         <TextView
             android:text="Tipo de Solicitud"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView1"
+            android:id="@+id/lblLoginTipoDato"
             android:foregroundGravity="center"
             android:gravity="center" />
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner1" />
+            android:id="@+id/spLoginTipoDato" />
         <TextView
             android:text="Numero de Folio"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2"
+            android:id="@+id/lblLoginFolioTitulo"
             android:foregroundGravity="center"
             android:gravity="center" />
         <EditText
             android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText1" />
+            android:id="@+id/txtLoginFolioDato" />
         <TextView
             android:text="RFC"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView3"
+            android:id="@+id/lblLoginrfcTitulo"
             android:foregroundGravity="center"
             android:gravity="center" />
         <EditText
             android:inputType="textPersonName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText2" />
+            android:id="@+id/txtLoginrfcDato" />
         <Button
             android:text="Consultar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button1" />
+            android:id="@+id/btnLoginStart" />
     </LinearLayout>
 </ScrollView>

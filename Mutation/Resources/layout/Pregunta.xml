@@ -5,11 +5,12 @@
     android:minHeight="25px"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/scrollView1">
+    android:id="@+id/scPreguntas">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/lyreguntas">
         <TextView
             android:text="¿Pregunta?"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -17,7 +18,7 @@
             android:layout_height="wrap_content"
             android:minWidth="25px"
             android:minHeight="25px"
-            android:id="@+id/textView1"
+            android:id="@+id/lblPreguntasTitulo"
             android:gravity="center" />
         <TextView
             android:text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio laborum eveniet earum facilis, quibusdam debitis ab corporis? Sunt reprehenderit adipisci quis tenetur culpa doloribus, rerum, quasi magnam eveniet, quidem aperiam?
@@ -56,13 +57,13 @@ Officiis at consequatur quia esse consectetur ullam, molestiae expedita aliquid.
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/textView2" />
+            android:id="@+id/txtPreguntasDatos" />
         <TextView
             android:text="Para más información comuniquese al correo: correodeejemplo@dominio.gob.mx"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView3" />
+            android:id="@+id/lblContactos" />
 
     </LinearLayout>
 </ScrollView>

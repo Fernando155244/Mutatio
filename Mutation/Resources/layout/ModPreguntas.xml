@@ -9,13 +9,13 @@
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout1">
+        android:id="@+id/lyPregunta">
         <TextView
             android:text="¿Pregunta de ejemplo?"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView1" />
+            android:id="@+id/txtPregunta" />
     </LinearLayout>
 
 </RelativeLayout>

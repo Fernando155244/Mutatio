@@ -59,20 +59,20 @@
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="76.0dp"
-            android:id="@+id/linearLayout2"
+            android:id="@+id/lyConfirmacionEstado"
             android:gravity="center_vertical">
             <TextView
                 android:text="Estado Actual:"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView1" />
+                android:id="@+id/lblConfirmacionEstadoTitulo" />
             <TextView
                 android:text="Medium Text"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView2" />
+                android:id="@+id/txtConfiracionEstadoDato" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -80,20 +80,20 @@
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="76.0dp"
-            android:id="@+id/linearLayout2"
+            android:id="@+id/lyConfirmOpcion1"
             android:gravity="center_vertical">
             <TextView
                 android:text="Opción 1:"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView1" />
+                android:id="@+id/lblConfirmacionOpcion1Titulo" />
             <TextView
                 android:text="Medium Text"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView2" />
+                android:id="@+id/txtConfirmacionOpcion1Dato" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -101,20 +101,20 @@
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="76.0dp"
-            android:id="@+id/linearLayout2"
+            android:id="@+id/lyConfirmOpcion2"
             android:gravity="center_vertical">
             <TextView
                 android:text="Opción 2:"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView1" />
+                android:id="@+id/lblConfirmacionOpcion2Titulo" />
             <TextView
                 android:text="Medium Text"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView2" />
+                android:id="@+id/txtConfirmacionOpcion2Dato" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -122,26 +122,26 @@
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="76.0dp"
-            android:id="@+id/linearLayout2"
+            android:id="@+id/lyConfirmacionNivel"
             android:gravity="center_vertical">
             <TextView
                 android:text="Nivel Educativo:"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView1" />
+                android:id="@+id/lblConfirmacionNivelTitulo"/>
             <TextView
                 android:text="Medium Text"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView2" />
+                android:id="@+id/txtConfirmacionNivelDatos" />
         </LinearLayout>
         <Button
             android:text="Consultar Estatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button1" />
+            android:id="@+id/btnConfirmacion" />
     </LinearLayout>
 
 </ScrollView>

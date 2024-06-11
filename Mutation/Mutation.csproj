@@ -65,6 +65,14 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcConfirmación.cs" />
+    <Compile Include="AcDirectorio.cs" />
+    <Compile Include="AcGraficas.cs" />
+    <Compile Include="AcInicio.cs" />
+    <Compile Include="AcLogin.cs" />
+    <Compile Include="AcModPreguntas.cs" />
+    <Compile Include="AcPregunta.cs" />
+    <Compile Include="AcPreguntas.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

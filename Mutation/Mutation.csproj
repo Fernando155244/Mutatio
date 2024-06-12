@@ -65,14 +65,15 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcAplash.cs" />
     <Compile Include="AcConfirmación.cs" />
     <Compile Include="AcDirectorio.cs" />
     <Compile Include="AcGraficas.cs" />
     <Compile Include="AcInicio.cs" />
-    <Compile Include="AcLogin.cs" />
     <Compile Include="AcModPreguntas.cs" />
     <Compile Include="AcPregunta.cs" />
     <Compile Include="AcPreguntas.cs" />
+    <Compile Include="clsDatos.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -107,11 +108,6 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\Login.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="OxyPlot.Xamarin.Android">
@@ -157,6 +153,43 @@
   <ItemGroup>
     <AndroidResource Include="Resources\layout\ModPreguntas.xml">
       <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\splah.xml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\LogodeMilVeinitcuatro.png" />
+    <AndroidResource Include="Resources\drawable\icono.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Positivo.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Negativo.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <Content Include="Resources\drawable\res\mipmap-anydpi-v26\ic_launcher.xml" />
+    <Content Include="Resources\drawable\res\mipmap-hdpi\ic_launcher.png" />
+    <Content Include="Resources\drawable\res\mipmap-hdpi\ic_launcher_adaptive_back.png" />
+    <Content Include="Resources\drawable\res\mipmap-hdpi\ic_launcher_adaptive_fore.png" />
+    <Content Include="Resources\drawable\res\mipmap-mdpi\ic_launcher.png" />
+    <Content Include="Resources\drawable\res\mipmap-mdpi\ic_launcher_adaptive_back.png" />
+    <Content Include="Resources\drawable\res\mipmap-mdpi\ic_launcher_adaptive_fore.png" />
+    <Content Include="Resources\drawable\res\mipmap-xhdpi\ic_launcher.png" />
+    <Content Include="Resources\drawable\res\mipmap-xhdpi\ic_launcher_adaptive_back.png" />
+    <Content Include="Resources\drawable\res\mipmap-xhdpi\ic_launcher_adaptive_fore.png" />
+    <Content Include="Resources\drawable\res\mipmap-xxhdpi\ic_launcher.png" />
+    <Content Include="Resources\drawable\res\mipmap-xxhdpi\ic_launcher_adaptive_back.png" />
+    <Content Include="Resources\drawable\res\mipmap-xxhdpi\ic_launcher_adaptive_fore.png" />
+    <Content Include="Resources\drawable\res\mipmap-xxxhdpi\ic_launcher.png" />
+    <Content Include="Resources\drawable\res\mipmap-xxxhdpi\ic_launcher_adaptive_back.png" />
+    <Content Include="Resources\drawable\res\mipmap-xxxhdpi\ic_launcher_adaptive_fore.png" />
+    <AndroidResource Include="Resources\drawable\SplashFuncion.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

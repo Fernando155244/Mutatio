@@ -29,13 +29,14 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtInicioRegistrado" />
+            android:id="@+id/txtInicioRegistrado"
+            android:visibility="visible" />
         <TextView
             android:text="La solicitud fue ____  DD/MM/YYYY"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtInicioRegistradoConfirmacion"
+            android:id="@+id/txtInicioConfirmacion"
             android:layout_marginBottom="51.0dp" />
         <LinearLayout
             android:orientation="horizontal"

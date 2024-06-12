@@ -1,14 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView
-        android:src="@android:drawable/ic_menu_gallery"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <LinearLayout
+        android:orientation="vertical"
         android:minWidth="25px"
         android:minHeight="25px"
-        android:id="@+id/imgIndexLogo" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lyLogin"
+        android:gravity="center">
+        <ImageView
+            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_width="380.0dp"
+            android:layout_height="127.5dp"
+            android:id="@+id/imgLoginLogo"
+            android:layout_marginTop="0.0dp" />
+        <TextView
+            android:text="Tipo de Solicitud"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblLoginTipoDato"
+            android:foregroundGravity="center"
+            android:gravity="center" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spLoginTipoDato" />
+        <TextView
+            android:text="Numero de Folio"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblLoginFolioTitulo"
+            android:foregroundGravity="center"
+            android:gravity="center" />
+        <EditText
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtLoginFolioDato" />
+        <TextView
+            android:text="RFC"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblLoginrfcTitulo"
+            android:foregroundGravity="center"
+            android:gravity="center" />
+        <EditText
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtLoginrfcDato" />
+        <Button
+            android:text="Consultar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnLoginStart" />
+    </LinearLayout>
 </RelativeLayout>

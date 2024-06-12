@@ -11,15 +11,14 @@ using System.Text;
 
 namespace Mutation
 {
-    [Activity(Label = "AcLogin")]
-    public class AcLogin : Activity
+    [Activity(Label = "clsDatos")]
+    public class clsDatos : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             // Create your application here
-            SetContentView(Resource.Layout.Login);
         }
     }
 }

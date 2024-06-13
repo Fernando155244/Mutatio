@@ -11,11 +11,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/lyPregunta">
         <TextView
-            android:text="¿Pregunta de ejemplo?"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtPregunta" />
+            android:id="@+id/PreguntaTexto" />
+        
     </LinearLayout>
 
 </RelativeLayout>

@@ -40,58 +40,96 @@ namespace Mutation
             ImageView ImgNotificacion = this.FindViewById<ImageView>(Resource.Id.lblInicioNotificacionImagen);
             TextView TituloNotificacion = this.FindViewById<TextView>(Resource.Id.txtInicioNotificacionTitulo);
             TextView LeyendaNotificacion = this.FindViewById<TextView>(Resource.Id.txtInicioNotificacionLeyenda);
+            TextView Asking = this.FindViewById<TextView>(Resource.Id.lblPregutnas);
 
+            Asking.Click += Asking_Click;
+
+            //Con esto ingresamos los dtos de la consulta
             datSolicitud.Text = $"Solicitud de Cambios Numero: {this.Intent.GetStringExtra("Folio")}";
+            //Con esto ingresamos el nombre del usuario
             datosSolicitante.Text = $"Del trabajador: {Nombre}";
+            //Iniciamos las restricciónes para definir estados
+            //Recibimos el verdadero o falso del usuario
             if (Recibido)
             {
+                //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
                 recibir.Visibility = ViewStates.Visible;
-                recibir.Text = $"Solicitud Registrada {dia.Day}/{dia.Month}/{dia.Year}";
+                recibir.Text = $"🔘Solicitud Registrada {dia.Day}/{dia.Month}/{dia.Year}";
+                //Si el resultado de la solicitud es 0
                 if(resultado== 0)
                 {
+                    //hacemos invisible la confirmación y la notificación
                     confirmacion.Visibility = ViewStates.Invisible;
                     Notificacion.Visibility = ViewStates.Invisible;
                 }
                 else
                 {
+                    //Si el resultado es 1 damos los resultados de que fue aceptada la solicitud
                     if (resultado == 1)
                     {
+                        //Hacemos visible la confirmación
                         confirmacion.Visibility = ViewStates.Visible;
-                        confirmacion.Text = $"La solicitud fue Aceptada {dia.Day}/{dia.Month}/{dia.Year}";
+                        //Damos la leyenda de confirmación
+                        confirmacion.Text = $"🔘La solicitud fue Aceptada {dia.Day}/{dia.Month}/{dia.Year}";
+                        //Hacemos visible la notificación (El lineart layout que dice si fuimos aceptados o no)
                         Notificacion.Visibility = ViewStates.Visible;
+                        //Damos imagen de positivo a la notificación
                         ImgNotificacion.SetImageResource(Resource.Drawable.Positivo);
+                        //Damos titulo de ser correcta
                         TituloNotificacion.Text = "Felicidades!";
+                        //Damos una leyenda feliciatando al usuario
                         LeyendaNotificacion.Text = $"Has sido aceptado para transferencia a {Opcion}";
                     }
+                    //Si el resultado fue 2 damos resultado de fue negada la solicitud
                     else if (resultado == 2)
                     {
+                        //Hacemos visible la confirmación
                         confirmacion.Visibility = ViewStates.Visible;
-                        confirmacion.Text = $"La solicitud fue Denegada {dia.Day}/{dia.Month}/{dia.Year}";
+                        //Damos la leyenda de confirmación
+                        confirmacion.Text = $"🔘La solicitud fue Denegada {dia.Day}/{dia.Month}/{dia.Year}";
+                        //Hacemos visible la notificación (El lineart layout que dice si fuimos aceptados o no)
                         Notificacion.Visibility = ViewStates.Visible;
+                        //Damos la imagen de denegación de solicitud
                         ImgNotificacion.SetImageResource(Resource.Drawable.Negativo);
+                        //Damos titulo de negación
                         TituloNotificacion.Text = "Lastima";
+                        //Damos leyenda de notificación de negación
                         LeyendaNotificacion.Text = $"No has sido aceptado para transferencia";
                     }
+                    //Si el resultado fue 3 damos aviso de que la solicitud fue cancelada
                     else if (resultado == 3)
                     {
+                        //Hacemos visible la confirmación
                         confirmacion.Visibility = ViewStates.Visible;
-                        confirmacion.Text = $"La solicitud fue Cancelada {dia.Day}/{dia.Month}/{dia.Year}";
+                        //Ingresamos el aviso de que la solicitud fue cancelada
+                        confirmacion.Text = $"🔘La solicitud fue Cancelada {dia.Day}/{dia.Month}/{dia.Year}";
+                        //Mantenemos la solicitud invisible
                         Notificacion.Visibility = ViewStates.Invisible;
                     }
                     else
                     {
+                        //En caso de no ser ninguno de los anteriores mandamos aviso de error para que se comunique con servicio tecnico
                         confirmacion.Visibility = ViewStates.Visible;
-                        confirmacion.Text = $"Error, por favor comuniquese a servicio tecnico";
+                        //Ingresamos la leyenda
+                        confirmacion.Text = $"🔘Error, por favor comuniquese a servicio tecnico";
+                        //Mantenemo invisible la notificación
                         Notificacion.Visibility = ViewStates.Invisible;
                     }
                 }
             }
             else
             {
+                //Mantenemos todo invisible
                 datSolicitud.Visibility = ViewStates.Invisible;
             }
+            //Textos inferiores de datos extra de la solicitud
             Estatus.Text = "En revision";
             Observaciones.Text = "Le falto ordenar su papeleo Wasowsky!";
+        }
+
+        private void Asking_Click(object sender, EventArgs e)
+        {
+            StartActivity(typeof(AcPreguntas));
         }
     }
 }

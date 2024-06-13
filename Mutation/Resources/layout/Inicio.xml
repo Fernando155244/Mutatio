@@ -30,7 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtInicioRegistrado"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:layout_marginBottom="40.5dp" />
         <TextView
             android:text="La solicitud fue ____  DD/MM/YYYY"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -114,7 +115,7 @@
         <TextView
             android:text="Preguntas Frecuentes"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/lblPregutnas"
             android:layout_marginTop="52.0dp" />

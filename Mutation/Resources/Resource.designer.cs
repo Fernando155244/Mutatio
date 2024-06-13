@@ -4299,40 +4299,46 @@ namespace Mutation
 			public const int txtPreguntasDatos = 2131231018;
 			
 			// aapt resource value: 0x7F08012B
-			public const int txtyGraficasCanceladas = 2131231019;
+			public const int txtTabEstado = 2131231019;
 			
 			// aapt resource value: 0x7F08012C
-			public const int @unchecked = 2131231020;
+			public const int txtTabNumeros = 2131231020;
 			
 			// aapt resource value: 0x7F08012D
-			public const int uniform = 2131231021;
+			public const int txtyGraficasCanceladas = 2131231021;
 			
 			// aapt resource value: 0x7F08012E
-			public const int unlabeled = 2131231022;
+			public const int @unchecked = 2131231022;
 			
 			// aapt resource value: 0x7F08012F
-			public const int up = 2131231023;
+			public const int uniform = 2131231023;
 			
 			// aapt resource value: 0x7F080130
-			public const int useLogo = 2131231024;
+			public const int unlabeled = 2131231024;
 			
 			// aapt resource value: 0x7F080131
-			public const int view_offset_helper = 2131231025;
+			public const int up = 2131231025;
 			
 			// aapt resource value: 0x7F080132
-			public const int view_tree_saved_state_registry_owner = 2131231026;
+			public const int useLogo = 2131231026;
 			
 			// aapt resource value: 0x7F080133
-			public const int visible = 2131231027;
+			public const int view_offset_helper = 2131231027;
 			
 			// aapt resource value: 0x7F080134
-			public const int visible_removing_fragment_view_tag = 2131231028;
+			public const int view_tree_saved_state_registry_owner = 2131231028;
 			
 			// aapt resource value: 0x7F080135
-			public const int withText = 2131231029;
+			public const int visible = 2131231029;
 			
 			// aapt resource value: 0x7F080136
-			public const int wrap_content = 2131231030;
+			public const int visible_removing_fragment_view_tag = 2131231030;
+			
+			// aapt resource value: 0x7F080137
+			public const int withText = 2131231031;
+			
+			// aapt resource value: 0x7F080138
+			public const int wrap_content = 2131231032;
 			
 			static Id()
 			{
@@ -4602,49 +4608,52 @@ namespace Mutation
 			public const int Inicio = 2131427377;
 			
 			// aapt resource value: 0x7F0B0032
-			public const int ModPreguntas = 2131427378;
+			public const int ModGraficos = 2131427378;
 			
 			// aapt resource value: 0x7F0B0033
-			public const int mtrl_layout_snackbar = 2131427379;
+			public const int ModPreguntas = 2131427379;
 			
 			// aapt resource value: 0x7F0B0034
-			public const int mtrl_layout_snackbar_include = 2131427380;
+			public const int mtrl_layout_snackbar = 2131427380;
 			
 			// aapt resource value: 0x7F0B0035
-			public const int notification_action = 2131427381;
+			public const int mtrl_layout_snackbar_include = 2131427381;
 			
 			// aapt resource value: 0x7F0B0036
-			public const int notification_action_tombstone = 2131427382;
+			public const int notification_action = 2131427382;
 			
 			// aapt resource value: 0x7F0B0037
-			public const int notification_template_custom_big = 2131427383;
+			public const int notification_action_tombstone = 2131427383;
 			
 			// aapt resource value: 0x7F0B0038
-			public const int notification_template_icon_group = 2131427384;
+			public const int notification_template_custom_big = 2131427384;
 			
 			// aapt resource value: 0x7F0B0039
-			public const int notification_template_part_chronometer = 2131427385;
+			public const int notification_template_icon_group = 2131427385;
 			
 			// aapt resource value: 0x7F0B003A
-			public const int notification_template_part_time = 2131427386;
+			public const int notification_template_part_chronometer = 2131427386;
 			
 			// aapt resource value: 0x7F0B003B
-			public const int Pregunta = 2131427387;
+			public const int notification_template_part_time = 2131427387;
 			
 			// aapt resource value: 0x7F0B003C
-			public const int Preguntas = 2131427388;
+			public const int Pregunta = 2131427388;
 			
 			// aapt resource value: 0x7F0B003D
-			public const int select_dialog_item_material = 2131427389;
+			public const int Preguntas = 2131427389;
 			
 			// aapt resource value: 0x7F0B003E
-			public const int select_dialog_multichoice_material = 2131427390;
+			public const int select_dialog_item_material = 2131427390;
 			
 			// aapt resource value: 0x7F0B003F
-			public const int select_dialog_singlechoice_material = 2131427391;
+			public const int select_dialog_multichoice_material = 2131427391;
 			
 			// aapt resource value: 0x7F0B0040
-			public const int support_simple_spinner_dropdown_item = 2131427392;
+			public const int select_dialog_singlechoice_material = 2131427392;
+			
+			// aapt resource value: 0x7F0B0041
+			public const int support_simple_spinner_dropdown_item = 2131427393;
 			
 			static Layout()
 			{

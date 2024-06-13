@@ -115,10 +115,20 @@
             android:layout_width="match_parent"
             android:layout_height="310.0dp"
             android:id="@+id/lisGraficas" />
-        <OxyPlot.Xamarin.Android.PlotView
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
             android:layout_width="match_parent"
-            android:layout_height="310.0dp"
-            android:id="@+id/GrafGraficas" />
+            android:layout_height="match_parent"
+            android:id="@+id/linearLayout1">
+            <OxyPlot.Xamarin.Android.PlotView
+                android:layout_width="match_parent"
+                android:layout_height="310.0dp"
+                android:id="@+id/GrafGraficas"
+                android:rotation="90"/>
+        </LinearLayout>
+        
     </LinearLayout>
     
 

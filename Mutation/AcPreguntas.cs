@@ -4,17 +4,21 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Java.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static Android.Icu.Text.Transliterator;
 
 namespace Mutation
 {
     [Activity(Label = "AcPreguntas")]
+    /*En esta pantalla tenemos la lista de preguntas frecuentes que podría hacer el usuario*/
     public class AcPreguntas : Activity
     {
-        private String[] ds = { "¿Cuanto tarda la transición?", "¿Tengo que tener casa alla antes de hacer la certificación?", "¿Me regalan el departamento?", "¿Ustedes pagan la mudanza?", "¿Cuántos han sido beneficiados?", "Directorio" };
+        //Lista de preguntas fijas
+        private String[] ds = { "¿Cuántos han sido beneficiados?", "Directorio", "¿Cuanto tarda la transición?", "¿Tengo que tener casa alla antes de hacer la certificación?", "¿Me regalan el departamento?", "¿Ustedes pagan la mudanza?" };
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -25,7 +29,30 @@ namespace Mutation
             //Indexados
             ListView ListaPreguntas = this.FindViewById<ListView>(Resource.Id.lsPreguntaTtablas);
 
+            //Mandamos a llenar la lista
             ListaPreguntas.Adapter = new Rellenar(this,ds);
+
+            //Mandamos la función por si presionan en una valor
+            ListaPreguntas.ItemClick += ListaPreguntas_ItemClick;
+        }
+
+        private void ListaPreguntas_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            //Si la posición selecciónada es 0 mandamos al usuario a la pantalla de graficas
+            if (e.Position == 0)
+            {
+                StartActivity(typeof(AcGraficas));
+            }//Si la repuesta es 1 lo mandamos al directorio
+            else if (e.Position == 1)
+            {
+                StartActivity(typeof(AcDirectorio));
+            }else //Si no es ni uno ni el otro manmos a una pregutna a responder
+            {
+                Intent Pregunta = new Intent(this, typeof(AcPregunta));
+                Pregunta.PutExtra("id", e.Position);
+                StartActivity(Pregunta);
+            }
+
         }
     }
 

@@ -30,6 +30,11 @@ Int32[] nds = {300,100,400};
 
             // Create your application here
             SetContentView(Resource.Layout.Graficas);
+
+            //Index y definición de logo
+            ImageView imgLogo = this.FindViewById<ImageView>(Resource.Id.Logo);
+            imgLogo.SetImageResource(Resource.Drawable.Logo);
+
             //Indexados
             PlotView Grafica = this.FindViewById<PlotView>(Resource.Id.GrafGraficas);
             ListView ListaPreguntas = this.FindViewById<ListView>(Resource.Id.lisGraficas);

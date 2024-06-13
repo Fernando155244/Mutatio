@@ -20,6 +20,9 @@ namespace Mutation
 
             // Create your application here
             SetContentView(Resource.Layout.Directorio);
+            //Index y definición de logo
+            ImageView imgLogo = this.FindViewById<ImageView>(Resource.Id.Logo);
+            imgLogo.SetImageResource(Resource.Drawable.Logo);
         }
     }
 }

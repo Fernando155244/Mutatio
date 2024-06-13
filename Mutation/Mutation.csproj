@@ -70,7 +70,6 @@
     <Compile Include="AcDirectorio.cs" />
     <Compile Include="AcGraficas.cs" />
     <Compile Include="AcInicio.cs" />
-    <Compile Include="AcModPreguntas.cs" />
     <Compile Include="AcPregunta.cs" />
     <Compile Include="AcPreguntas.cs" />
     <Compile Include="clsDatos.cs" />

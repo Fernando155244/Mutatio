@@ -26,6 +26,10 @@ namespace Mutation
             // Create your application here
             SetContentView(Resource.Layout.Preguntas);
 
+            //Index y definición de logo
+            ImageView imgLogo = this.FindViewById<ImageView>(Resource.Id.Logo);
+            imgLogo.SetImageResource(Resource.Drawable.Logo);
+
             //Indexados
             ListView ListaPreguntas = this.FindViewById<ListView>(Resource.Id.lsPreguntaTtablas);
 

@@ -22,6 +22,10 @@ namespace Mutation
             // Create your application here
             SetContentView(Resource.Layout.Confirmacion);
 
+            //Index y definición de logo
+            ImageView imgLogo = this.FindViewById<ImageView>(Resource.Id.Logo);
+            imgLogo.SetImageResource(Resource.Drawable.Logo);
+
             //Indexados
             TextView solicitud = this.FindViewById<TextView>(Resource.Id.txtConfirmacionTipoSolicitudDato);
             TextView Nombre = this.FindViewById<TextView>(Resource.Id.txtConfirmacionNombreDato);

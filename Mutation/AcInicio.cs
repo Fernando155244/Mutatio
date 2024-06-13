@@ -23,6 +23,11 @@ namespace Mutation
 
             // Create your application here
             SetContentView(Resource.Layout.Inicio);
+
+            //Index y definición de logo
+            ImageView imgLogo = this.FindViewById<ImageView>(Resource.Id.Logo);
+            imgLogo.SetImageResource(Resource.Drawable.Logo);
+
             bool Recibido = true;
             Date dia = new Date(2000,04,15);
             String Opcion = "Tu casa y promovido a Cliente";

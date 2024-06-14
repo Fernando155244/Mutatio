@@ -8,15 +8,5 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-	<style name="TemaSplash" parent="Theme.AppCompat.Light.NoActionBar">
-		<item name="colorPrimary">@color/colorPrimary</item>
-		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-		<item name="colorAccent">@color/colorAccent</item>
-		<!--Todo Esto lo agregue yo para el splach-->
-		<item name="android:windowBackground">@drawable/splah</item>
-		<item name="android:windowFullscreen">true</item>
-		<item name="android:windowNoTitle">true</item>
-		<item name="android:windowContentOverlay">@null</item>
-	</style>
 
 </resources>

@@ -23,13 +23,14 @@ namespace Mutation
             ImageView Logo = this.FindViewById<ImageView>(Resource.Id.imgLoginLogo);
             Button btnLogin = this.FindViewById<Button>(Resource.Id.btnLoginStart);
             Spinner spTipo = this.FindViewById<Spinner>(Resource.Id.spLoginTipoDato);
-
+            
             //Definición de valor
             Logo.SetImageResource(Resource.Drawable.Logo);
-
+            System.Threading.Thread.Sleep(30000);
+            StartActivity(typeof(acSplash));
             //Función del boton
             btnLogin.Click += BtnLogin_Click ;
-
+            
             //Función automatica del spinner
             LlenarTipo();
         }

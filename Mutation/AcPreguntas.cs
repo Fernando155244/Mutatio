@@ -18,7 +18,7 @@ namespace Mutation
     public class AcPreguntas : Activity
     {
         //Lista de preguntas fijas
-        private String[] ds = { "¿Cuántos han sido beneficiados?", "Directorio", "¿Cuanto tarda la transición?", "¿Tengo que tener casa alla antes de hacer la certificación?", "¿Me regalan el departamento?", "¿Ustedes pagan la mudanza?" };
+        private String[] ds = { "¿Cuántos han sido beneficiados?", "¿Cuanto tarda la transición?", "¿Tengo que tener casa alla antes de hacer la certificación?", "¿Me regalan el departamento?", "¿Ustedes pagan la mudanza?" };
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -46,10 +46,6 @@ namespace Mutation
             if (e.Position == 0)
             {
                 StartActivity(typeof(AcGraficas));
-            }//Si la repuesta es 1 lo mandamos al directorio
-            else if (e.Position == 1)
-            {
-                StartActivity(typeof(AcDirectorio));
             }else //Si no es ni uno ni el otro manmos a una pregutna a responder
             {
                 Intent Pregunta = new Intent(this, typeof(AcPregunta));

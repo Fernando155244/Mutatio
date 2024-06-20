@@ -66,12 +66,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcConfirmación.cs" />
-    <Compile Include="AcDirectorio.cs" />
     <Compile Include="AcGraficas.cs" />
     <Compile Include="AcInicio.cs" />
     <Compile Include="AcPregunta.cs" />
     <Compile Include="AcPreguntas.cs" />
-    <Compile Include="acSplash.cs" />
     <Compile Include="clsDatos.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -140,11 +138,6 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Directorio.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\layout\Graficas.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -185,9 +178,6 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\ModDirectorio.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\Splash.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

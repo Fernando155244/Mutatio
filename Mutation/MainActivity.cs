@@ -26,8 +26,6 @@ namespace Mutation
             
             //Definición de valor
             Logo.SetImageResource(Resource.Drawable.Logo);
-            System.Threading.Thread.Sleep(30000);
-            StartActivity(typeof(acSplash));
             //Función del boton
             btnLogin.Click += BtnLogin_Click ;
             

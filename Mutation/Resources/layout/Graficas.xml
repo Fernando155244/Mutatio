@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,7 +11,7 @@
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/lyGraficas" >
+        android:id="@+id/lyGraficas">
         <LinearLayout
             android:orientation="horizontal"
             android:minWidth="25px"
@@ -44,10 +46,10 @@
                 android:layout_height="match_parent"
                 android:id="@+id/lblGraficasTipoSolicitud" />
             <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spGraficasTipoSolicitud" />
-            </LinearLayout>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spGraficasTipoSolicitud" />
+        </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:minWidth="25px"
@@ -140,10 +142,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="310.0dp"
                 android:id="@+id/GrafGraficas"
-                android:rotation="90"/>
+                android:rotation="90"
+                tools:ignore="MissingDimension" />
         </LinearLayout>
-        
+
     </LinearLayout>
-    
+
 
 </ScrollView>

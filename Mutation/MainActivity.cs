@@ -12,15 +12,37 @@ namespace Mutation
      En esta pagina tenemos la pagina de login para acceder conforme al RFC y al folio y tipo de solicitud de la petición*/
     public class MainActivity : AppCompatActivity
     {
-        protected override void OnCreate(Bundle savedInstanceState)
+        //Declaramos la función para conectarnos con la base
+        clsDatos datos = new clsDatos();
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.activity_main);
-
-            //Indexados
-            ImageView Logo = this.FindViewById<ImageView>(Resource.Id.imgLoginLogo);
+            //Declaramos la variable para definir si nos podemos conectar o no
+            bool resultado = false;
+            //Iniciamos el intento
+            try
+            {
+                //Mandamos a llamar la función asimetrica Inicial
+                resultado = await datos.Inicial();
+                //Si nos podemos conectar o no mandara un mensaje con el resultado
+                if (resultado)
+                {
+                    Toast.MakeText(this, $"Conexion exitosa", ToastLength.Long).Show();
+                }
+                else
+                {
+                    Toast.MakeText(this, $"Conexion invalida", ToastLength.Long).Show();
+                }
+            }
+            catch//Si no logra conectarse damos redundancia de que no se pudo conectar
+            {
+                Toast.MakeText(this, $"Conexion invalida", ToastLength.Long).Show();
+            }
+                //Indexados
+                ImageView Logo = this.FindViewById<ImageView>(Resource.Id.imgLoginLogo);
             Button btnLogin = this.FindViewById<Button>(Resource.Id.btnLoginStart);
             Spinner spTipo = this.FindViewById<Spinner>(Resource.Id.spLoginTipoDato);
             

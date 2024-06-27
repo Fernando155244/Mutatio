@@ -35,7 +35,7 @@ namespace Mutation
             return ds;
         }
         //Función asimetrica
-        public Task<bool> Inicial()
+        public Task<bool> Conectar()
         {
             //Llama a la fución HelloWorld para pedir el bool
             return Task.Run(()=>HelloWorld());
@@ -72,6 +72,36 @@ namespace Mutation
         {
             //Llamamos a la función Login para pedir Los valores de manera asimetrica
             return Task.Run(()=>Revision(NoSolicitud, Tipo));
+        }
+        private DataSet Inicio(int NoSolicitud, int Tipo)
+        {
+            //Hacemos una conexion con el servicio en linea
+            Conexion.Mutation ws = new Conexion.Mutation();
+            //Generamos la variable para recibir una respuesta
+            DataSet ds;
+            //mandamos a pedir los datos al servidor con el cliente
+            ds = ws.Inicio(NoSolicitud,Tipo);
+            //regresamos el valor
+            return ds;
+        }
+        public Task<DataSet> Iniciar(int NoSolicitud, int Tipo)
+        {
+            return Task.Run(()=>Inicio(NoSolicitud,Tipo));
+        }
+        private DataSet graficas(int referencias, int tipo, int certificadas, int canceladas, int status)
+        {
+            //Hacemos una conexion con el servicio en linea
+            Conexion.Mutation ws = new Conexion.Mutation();
+            //Generamos la variable para recibir una respuesta
+            DataSet ds;
+            //mandamos a pedir los datos al servidor con el cliente
+            ds = ws.Graficas(referencias, tipo, certificadas, canceladas,status);
+            //regresamos el valor
+            return ds;
+        }
+        public Task<DataSet> graficadora(int referencias, int tipo, int certificadas, int canceladas, int status)
+        {
+            return Task.Run(() => graficas(referencias, tipo, certificadas, canceladas, status));
         }
     }
 }

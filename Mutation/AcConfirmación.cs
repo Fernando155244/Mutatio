@@ -6,6 +6,7 @@ using Android.Views;
 using Android.Widget;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -15,6 +16,8 @@ namespace Mutation
     [Activity(Label = "AcConfirmación")]
     public class AcConfirmación : Activity
     {
+        clsDatos datos = new clsDatos();
+        DataSet ds = new DataSet();
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -26,6 +29,16 @@ namespace Mutation
             ImageView imgLogo = this.FindViewById<ImageView>(Resource.Id.Logo);
             imgLogo.SetImageResource(Resource.Drawable.Logo);
 
+            Button btnConfirmacion = this.FindViewById<Button>(Resource.Id.btnConfirmacion);
+            llenarBD();
+           
+
+            //Funcion de boton
+            btnConfirmacion.Click += BtnConfirmacion_Click;
+
+        }
+        private async void llenarBD()
+        {
             //Indexados
             TextView solicitud = this.FindViewById<TextView>(Resource.Id.txtConfirmacionTipoSolicitudDato);
             TextView Nombre = this.FindViewById<TextView>(Resource.Id.txtConfirmacionNombreDato);
@@ -33,18 +46,15 @@ namespace Mutation
             TextView Opcion1 = this.FindViewById<TextView>(Resource.Id.txtConfirmacionOpcion1Dato);
             TextView Opcion2 = this.FindViewById<TextView>(Resource.Id.txtConfirmacionOpcion2Dato);
             TextView Nivel = this.FindViewById<TextView>(Resource.Id.txtConfirmacionNivelDatos);
-            Button btnConfirmacion = this.FindViewById<Button>(Resource.Id.btnConfirmacion);
-
+            //Mandamos a llenar la función
+            ds = await datos.Revisar(Convert.ToInt32(this.Intent.GetStringExtra("Folio")), this.Intent.GetIntExtra("Tipo", 0));
             //Definición de datos
-            solicitud.Text = "Cambios";
-            Nombre.Text = "Fernando";
-            Actual.Text = "Universidad";
-            Opcion1.Text = "Tlatelolco";
-            Opcion2.Text = "HomeOffice";
-            Nivel.Text = "Practicante";
-
-            //Funcion de boton
-            btnConfirmacion.Click += BtnConfirmacion_Click;
+            solicitud.Text = this.Intent.GetStringExtra("Tipo");
+            Nombre.Text = $"{ds.Tables[0].Rows[0]["paterno"].ToString()} {ds.Tables[0].Rows[0]["materno"].ToString()} {ds.Tables[0].Rows[0]["nombres"].ToString()}";
+            Actual.Text = $"{ds.Tables[0].Rows[0]["estado_actual"].ToString()}";
+            Opcion1.Text = $"{ds.Tables[0].Rows[0]["opcion_1"].ToString()}";
+            Opcion2.Text = $"{ds.Tables[0].Rows[0]["opcion_2"].ToString()}";
+            Nivel.Text = $"{ds.Tables[0].Rows[0]["Nivel_educativo"].ToString()}";
 
         }
         /*Si los datos son correctos este boton nos permite ir a la proxima pantalla*/

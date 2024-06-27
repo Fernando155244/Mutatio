@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Widget;
 using AndroidX.AppCompat.App;
+using System;
 
 namespace Mutation
 {
@@ -22,11 +23,24 @@ namespace Mutation
             SetContentView(Resource.Layout.activity_main);
             //Declaramos la variable para definir si nos podemos conectar o no
             bool resultado = false;
+                //Indexados
+                ImageView Logo = this.FindViewById<ImageView>(Resource.Id.imgLoginLogo);
+            Button btnLogin = this.FindViewById<Button>(Resource.Id.btnLoginStart);
+            Spinner spTipo = this.FindViewById<Spinner>(Resource.Id.spLoginTipoDato);
+            
+            //Definición de valor
+            Logo.SetImageResource(Resource.Drawable.Logo);
+            //Función del boton
+            btnLogin.Click += BtnLogin_Click ;
+            
+            //Función automatica del spinner
+            LlenarTipo();
+
             //Iniciamos el intento
             try
             {
                 //Mandamos a llamar la función asimetrica Inicial
-                resultado = await datos.Inicial();
+                resultado = await datos.Conectar();
                 //Si nos podemos conectar o no mandara un mensaje con el resultado
                 if (resultado)
                 {
@@ -41,33 +55,33 @@ namespace Mutation
             {
                 Toast.MakeText(this, $"Conexion invalida", ToastLength.Long).Show();
             }
-                //Indexados
-                ImageView Logo = this.FindViewById<ImageView>(Resource.Id.imgLoginLogo);
-            Button btnLogin = this.FindViewById<Button>(Resource.Id.btnLoginStart);
-            Spinner spTipo = this.FindViewById<Spinner>(Resource.Id.spLoginTipoDato);
-            
-            //Definición de valor
-            Logo.SetImageResource(Resource.Drawable.Logo);
-            //Función del boton
-            btnLogin.Click += BtnLogin_Click ;
-            
-            //Función automatica del spinner
-            LlenarTipo();
         }
         /*Con esta función al hacer click en el boton manamos a pedir los datos de los text view y el 
          * spinner para que nos permita ver si son datos reales y si avanza*/
-        private void BtnLogin_Click(object sender, System.EventArgs e)
+        private async void BtnLogin_Click(object sender, System.EventArgs e)
         {
             //Indexamos
             TextView RFC = this.FindViewById<TextView>(Resource.Id.txtLoginrfcDato);
             TextView NoFolio = this.FindViewById<TextView>(Resource.Id.txtLoginFolioDato);
             Spinner spTipo = this.FindViewById<Spinner>(Resource.Id.spLoginTipoDato);
-            //Por ahora es una notifcación para ver los datos
-            Toast.MakeText(this, $"El RFC es {RFC.Text}, el Numero de Folio es {NoFolio.Text} y el tipo de folio es {spTipo.SelectedItemPosition}" , ToastLength.Long).Show();
-            //Esto se debe poner en un if para que el programa mande a llamar al servidor y luego nos permita o bien llamar a otra pantalla o bien decir que no es correcto
-            Intent Login = new Intent(this, typeof(AcConfirmación));
-            Login.PutExtra("Folio", NoFolio.Text);
-            StartActivity(Login);
+
+            //Definimos una variable para saber si los datos son correctos o no y la rellenamos con los datos del login
+            bool Log = await datos.Sesion(Convert.ToInt32(NoFolio.Text), RFC.Text, spTipo.SelectedItemPosition);
+            if (Log)
+            {
+                Intent Login = new Intent(this, typeof(AcConfirmación));
+                Login.PutExtra("Folio", NoFolio.Text);
+                Login.PutExtra("Tipo", spTipo.SelectedItemPosition);
+                StartActivity(Login);
+            }
+            else
+            {
+                Toast.MakeText(this, $"El RFC y/o el numero de Folio son incorrectos", ToastLength.Long).Show();
+            }
+
+                //Por ahora es una notifcación para ver los datos
+                Toast.MakeText(this, $"El RFC es {RFC.Text}, el Numero de Folio es {NoFolio.Text} y el tipo de folio es {spTipo.SelectedItemPosition}" , ToastLength.Long).Show();
+            
 
         }
         /*Esta función nos permite llenar el spinner para que el usuario pueda ver los tipos de solicitud*/

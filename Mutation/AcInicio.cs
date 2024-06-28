@@ -8,6 +8,7 @@ using Android.Widget;
 using Java.Sql;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,12 +18,17 @@ namespace Mutation
     [Activity(Label = "AcInicio")]
     public class AcInicio : Activity
     {
+        clsDatos datos = new clsDatos();
+        DataSet ds = new DataSet();
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             // Create your application here
             SetContentView(Resource.Layout.Inicio);
+
+            //Mandamos a pedir los datos para analizar los datos
+            Llenar();
 
             //Index y definición de logo
             ImageView imgLogo = this.FindViewById<ImageView>(Resource.Id.Logo);
@@ -130,6 +136,11 @@ namespace Mutation
             //Textos inferiores de datos extra de la solicitud
             Estatus.Text = "En revision";
             Observaciones.Text = "Le falto ordenar su papeleo Wasowsky!";
+        }
+
+        private async void Llenar()
+        {
+            ds = await datos.Iniciar(this.Intent.GetIntExtra("Folio", 0), this.Intent.GetIntExtra("Tipo", 0));
         }
 
         private void Asking_Click(object sender, EventArgs e)

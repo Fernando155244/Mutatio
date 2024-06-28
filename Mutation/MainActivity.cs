@@ -35,7 +35,6 @@ namespace Mutation
             
             //Función automatica del spinner
             LlenarTipo();
-
             //Iniciamos el intento
             try
             {
@@ -54,10 +53,17 @@ namespace Mutation
             catch//Si no logra conectarse damos redundancia de que no se pudo conectar
             {
                 Toast.MakeText(this, $"Conexion invalida", ToastLength.Long).Show();
+                
             }
         }
+
+        private IDialogInterfaceOnClickListener Aceptar()
+        {
+            throw new NotImplementedException();
+        }
+
         /*Con esta función al hacer click en el boton manamos a pedir los datos de los text view y el 
-         * spinner para que nos permita ver si son datos reales y si avanza*/
+* spinner para que nos permita ver si son datos reales y si avanza*/
         private async void BtnLogin_Click(object sender, System.EventArgs e)
         {
             //Indexamos

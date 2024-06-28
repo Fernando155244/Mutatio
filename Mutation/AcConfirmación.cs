@@ -46,15 +46,35 @@ namespace Mutation
             TextView Opcion1 = this.FindViewById<TextView>(Resource.Id.txtConfirmacionOpcion1Dato);
             TextView Opcion2 = this.FindViewById<TextView>(Resource.Id.txtConfirmacionOpcion2Dato);
             TextView Nivel = this.FindViewById<TextView>(Resource.Id.txtConfirmacionNivelDatos);
-            //Mandamos a llenar la función
-            ds = await datos.Revisar(Convert.ToInt32(this.Intent.GetStringExtra("Folio")), this.Intent.GetIntExtra("Tipo", 0));
-            //Definición de datos
-            solicitud.Text = this.Intent.GetStringExtra("Tipo");
-            Nombre.Text = $"{ds.Tables[0].Rows[0]["paterno"].ToString()} {ds.Tables[0].Rows[0]["materno"].ToString()} {ds.Tables[0].Rows[0]["nombres"].ToString()}";
-            Actual.Text = $"{ds.Tables[0].Rows[0]["estado_actual"].ToString()}";
-            Opcion1.Text = $"{ds.Tables[0].Rows[0]["opcion_1"].ToString()}";
-            Opcion2.Text = $"{ds.Tables[0].Rows[0]["opcion_2"].ToString()}";
-            Nivel.Text = $"{ds.Tables[0].Rows[0]["Nivel_educativo"].ToString()}";
+            try
+            {
+                //Mandamos a llenar la función
+                ds = await datos.Revisar(Convert.ToInt32(this.Intent.GetStringExtra("Folio")), this.Intent.GetIntExtra("Tipo", 0));
+                //Definición de datos
+                if (this.Intent.GetIntExtra("Tipo", 0) == 0)
+                {
+                    solicitud.Text = "Cambios";
+                    Nombre.Text = $"{ds.Tables[0].Rows[0]["paterno"].ToString()} {ds.Tables[0].Rows[0]["materno"].ToString()} {ds.Tables[0].Rows[0]["nombres"].ToString()}";
+                    Actual.Text = $"{ds.Tables[0].Rows[0]["Actual"].ToString()}";
+                    Opcion1.Text = $"{ds.Tables[0].Rows[0]["Opcion1"].ToString()}";
+                    Opcion2.Text = $"{ds.Tables[0].Rows[0]["Opcion2"].ToString()}";
+                    Nivel.Text = $"{ds.Tables[0].Rows[0]["nivel"].ToString()}";
+                }
+                else
+                {
+                    solicitud.Text = "Permutas";
+                    Nombre.Text = $"{ds.Tables[0].Rows[0]["paterno"].ToString()} {ds.Tables[0].Rows[0]["materno"].ToString()} {ds.Tables[0].Rows[0]["nombres"].ToString()}";
+                    Actual.Text = $"{ds.Tables[0].Rows[0]["Actual"].ToString()}";
+                    Opcion1.Text = $"{ds.Tables[0].Rows[0]["Opcion"].ToString()}";
+                    Opcion2.Text = $"Null";
+                    Nivel.Text = $"{ds.Tables[0].Rows[0]["nivel"].ToString()}";
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(this,"Error en los datos, intente de nuevo", ToastLength.Long).Show();
+            }
+            
 
         }
         /*Si los datos son correctos este boton nos permite ir a la proxima pantalla*/
@@ -65,7 +85,8 @@ namespace Mutation
 
 
             Intent Confirmado = new Intent(this, typeof(AcInicio));
-            Confirmado.PutExtra("Folio", this.Intent.GetStringExtra("Folio"));
+            Confirmado.PutExtra("Folio", Convert.ToInt32(this.Intent.GetStringExtra("Folio")));
+            Confirmado.PutExtra("Tipo", this.Intent.GetIntExtra("Tipo", 0));
             StartActivity(Confirmado);
         }
     }

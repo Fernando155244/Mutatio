@@ -193,6 +193,9 @@
     <AndroidResource Include="Resources\layout\ModDirectorio.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Neutro.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
     <None Include="Web References\Conexion\Mutation.disco" />
   </ItemGroup>
   <ItemGroup>

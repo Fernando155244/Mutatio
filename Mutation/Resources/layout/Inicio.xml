@@ -114,10 +114,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtInicioNotificacionTitulo"
-                android:gravity="center"
-                android:text="Titulo" />
+                android:gravity="center"/>
             <TextView
-                android:text="Leyenda"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -85,7 +85,7 @@ namespace Mutation
 
 
             Intent Confirmado = new Intent(this, typeof(AcInicio));
-            Confirmado.PutExtra("Folio", Convert.ToInt32(this.Intent.GetStringExtra("Folio")));
+            Confirmado.PutExtra("Folio",this.Intent.GetIntExtra("Folio",0));
             Confirmado.PutExtra("Tipo", this.Intent.GetIntExtra("Tipo", 0));
             StartActivity(Confirmado);
         }

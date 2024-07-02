@@ -142,7 +142,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="310.0dp"
                 android:id="@+id/GrafGraficas"
-                android:rotation="90"
                 tools:ignore="MissingDimension" />
         </LinearLayout>
 

@@ -49,7 +49,7 @@ namespace Mutation
             try
             {
                 //Mandamos a llenar la función
-                ds = await datos.Revisar(Convert.ToInt32(this.Intent.GetStringExtra("Folio")), this.Intent.GetIntExtra("Tipo", 0));
+                ds = await datos.Revisar(this.Intent.GetIntExtra("Folio", 0), this.Intent.GetIntExtra("Tipo", 0));
                 //Definición de datos
                 if (this.Intent.GetIntExtra("Tipo", 0) == 0)
                 {
@@ -72,7 +72,7 @@ namespace Mutation
             }
             catch (Exception ex)
             {
-                Toast.MakeText(this,"Error en los datos, intente de nuevo", ToastLength.Long).Show();
+                Toast.MakeText(this,$"Error en los datos, intente de nuevo {ex}", ToastLength.Long).Show();
             }
             
 
@@ -80,14 +80,11 @@ namespace Mutation
         /*Si los datos son correctos este boton nos permite ir a la proxima pantalla*/
         private void BtnConfirmacion_Click(object sender, EventArgs e)
         {
-            //Esto es solo para mostrar que se envia, se tiene que borrar
-            Toast.MakeText(this, $"Folio {this.Intent.GetStringExtra("Folio")}", ToastLength.Long).Show();
-
-
             Intent Confirmado = new Intent(this, typeof(AcInicio));
             Confirmado.PutExtra("Folio",this.Intent.GetIntExtra("Folio",0));
             Confirmado.PutExtra("Tipo", this.Intent.GetIntExtra("Tipo", 0));
             StartActivity(Confirmado);
+            DataSet dataSet = new DataSet();
         }
     }
 }

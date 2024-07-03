@@ -73,7 +73,7 @@ namespace Mutation
             //Llamamos a la función Login para pedir Los valores de manera asimetrica
             return Task.Run(()=>Revision(NoSolicitud, Tipo));
         }
-        private DataSet Inicio(int NoSolicitud, int Tipo)
+        public DataSet Iniciar(int NoSolicitud, int Tipo)
         {
             //Hacemos una conexion con el servicio en linea
             Conexion.Mutation ws = new Conexion.Mutation();
@@ -83,10 +83,6 @@ namespace Mutation
             ds = ws.Inicio(NoSolicitud,Tipo);
             //regresamos el valor
             return ds;
-        }
-        public Task<DataSet> Iniciar(int NoSolicitud, int Tipo)
-        {
-            return Task.Run(()=>Inicio(NoSolicitud,Tipo));
         }
         private DataSet graficas(int referencias, int tipo, int certificadas, int canceladas, int status)
         {

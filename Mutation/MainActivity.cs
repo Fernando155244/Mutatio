@@ -76,7 +76,7 @@ namespace Mutation
             if (Log)
             {
                 Intent Login = new Intent(this, typeof(AcConfirmación));
-                Login.PutExtra("Folio", NoFolio.Text);
+                Login.PutExtra("Folio", Convert.ToInt32(NoFolio.Text));
                 Login.PutExtra("Tipo", spTipo.SelectedItemPosition);
                 StartActivity(Login);
             }
@@ -84,9 +84,6 @@ namespace Mutation
             {
                 Toast.MakeText(this, $"El RFC y/o el numero de Folio son incorrectos", ToastLength.Long).Show();
             }
-
-                //Por ahora es una notifcación para ver los datos
-                Toast.MakeText(this, $"El RFC es {RFC.Text}, el Numero de Folio es {NoFolio.Text} y el tipo de folio es {spTipo.SelectedItemPosition}" , ToastLength.Long).Show();
             
 
         }

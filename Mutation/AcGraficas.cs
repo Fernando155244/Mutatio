@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using OxyPlot.Xamarin.Android;
 using System.Runtime.CompilerServices;
+using Android.Service.Autofill;
 
 namespace Mutation
 {
@@ -20,9 +21,10 @@ namespace Mutation
     /*En esta pantalla podemos ver en graficas cuantos han sido veneficiados en este sistema*/
     public class AcGraficas : Activity
     {
-        String[] ds = {"CDMX", "EDOMEX", "Veracruz" };
-Int32[] nds = {300,100,400};
-        protected override void OnCreate(Bundle savedInstanceState)
+        clsDatos datos = new clsDatos();
+        Dataset ds;
+
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             /*Variables para pruebas*/
             
@@ -43,6 +45,10 @@ Int32[] nds = {300,100,400};
             Spinner spReferencias = this.FindViewById<Spinner>(Resource.Id.spGraficasReferencia);
 
             Grafica.Model = Estados();
+
+
+            ds = await datos.graficadora();
+
             //Mandamos a llenar la lista
             ListaPreguntas.Adapter = new RellenarGraficas(this,ds,nds);
             

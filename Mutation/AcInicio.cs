@@ -20,7 +20,7 @@ namespace Mutation
     [Activity(Label = "AcInicio")]
     public class AcInicio : Activity
     {
-        DataSet ds = new DataSet();
+        public DataSet ds = new DataSet();
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -29,14 +29,11 @@ namespace Mutation
             SetContentView(Resource.Layout.Inicio);
 
             //Mandamos a pedir los datos para analizar los datos
-            Llenar();
+            int resultado = Llenar();
 
             //Index y definición de logo
             ImageView imgLogo = this.FindViewById<ImageView>(Resource.Id.Logo);
             imgLogo.SetImageResource(Resource.Drawable.Logo);
-
-            int resultado = await Valor();
-
             //Indexados
             TextView datSolicitud = this.FindViewById<TextView>(Resource.Id.txtInicioDatosSolicitud);
             TextView datosSolicitante = this.FindViewById<TextView>(Resource.Id.txtInicioNombreSolicitante);
@@ -52,10 +49,10 @@ namespace Mutation
 
             Asking.Click += Asking_Click;
             //Con esto ingresamos los dtos de la consulta
-            datSolicitud.Text = $"Solicitud de Cambios Numero: {this.Intent.GetStringExtra("Folio")}";
+            datSolicitud.Text = $"Solicitud de Cambios Numero: {this.Intent.GetIntExtra("Folio", 0)}";
             //Con esto ingresamos el nombre del usuario
             datosSolicitante.Text = $"Del trabajador: {ds.Tables[0].Rows[0]["paterno"].ToString()} {ds.Tables[0].Rows[0]["materno"].ToString()} {ds.Tables[0].Rows[0]["nombres"].ToString()}";
-
+            Notificacion.Visibility = ViewStates.Invisible;
             if (this.Intent.GetIntExtra("Tipo", 0) == 0)
             {
                 //Iniciamos las restricciónes para definir estados
@@ -136,11 +133,13 @@ namespace Mutation
             }
         }
 
-        private async Task<int> Valor()
+
+        private int Llenar()
         {
             clsDatos datos = new clsDatos();
-            ds = await datos.Iniciar(this.Intent.GetIntExtra("Folio", 0), this.Intent.GetIntExtra("Tipo", 0));
-
+            ds = datos.Iniciar(this.Intent.GetIntExtra("Folio", 0), this.Intent.GetIntExtra("Tipo", 0));
+            //Esto es solo para mostrar que se envia, se tiene que borrar
+            Toast.MakeText(this, $"Folio {this.Intent.GetIntExtra("Folio", 0)}, Tipo {this.Intent.GetIntExtra("Tipo", 0)}", ToastLength.Long).Show();
 
             //Indexados
             TextView Estatus = this.FindViewById<TextView>(Resource.Id.txtInicioEstatusDato);
@@ -180,12 +179,6 @@ namespace Mutation
             {
                 return 0;
             }
-        }
-
-        private async void Llenar()
-        {
-            clsDatos datos = new clsDatos();
-            ds = await datos.Iniciar(this.Intent.GetIntExtra("Folio", 0), this.Intent.GetIntExtra("Tipo", 0));
         }
 
         private void Asking_Click(object sender, EventArgs e)

@@ -70,22 +70,27 @@ namespace Mutation
             TextView RFC = this.FindViewById<TextView>(Resource.Id.txtLoginrfcDato);
             TextView NoFolio = this.FindViewById<TextView>(Resource.Id.txtLoginFolioDato);
             Spinner spTipo = this.FindViewById<Spinner>(Resource.Id.spLoginTipoDato);
-
-            //Definimos una variable para saber si los datos son correctos o no y la rellenamos con los datos del login
-            bool Log = await datos.Sesion(Convert.ToInt32(NoFolio.Text), RFC.Text, spTipo.SelectedItemPosition);
-            if (Log)
+            try
             {
-                Intent Login = new Intent(this, typeof(AcConfirmación));
-                Login.PutExtra("Folio", Convert.ToInt32(NoFolio.Text));
-                Login.PutExtra("Tipo", spTipo.SelectedItemPosition);
-                StartActivity(Login);
-            }
-            else
-            {
-                Toast.MakeText(this, $"El RFC y/o el numero de Folio son incorrectos", ToastLength.Long).Show();
-            }
-            
+                //Definimos una variable para saber si los datos son correctos o no y la rellenamos con los datos del login
+                bool Log = await datos.Sesion(Convert.ToInt32(NoFolio.Text), RFC.Text, spTipo.SelectedItemPosition);
+                if (Log)
+                {
+                    Intent Login = new Intent(this, typeof(AcConfirmación));
+                    Login.PutExtra("Folio", Convert.ToInt32(NoFolio.Text));
+                    Login.PutExtra("Tipo", spTipo.SelectedItemPosition);
+                    StartActivity(Login);
+                }
+                else
+                {
+                    Toast.MakeText(this, $"El RFC y/o el numero de Folio son incorrectos", ToastLength.Long).Show();
+                }
 
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(this, $"Algo salio mal por favor verifique su conexion a red o contacte con sistemas de la sep", ToastLength.Long).Show();
+            }
         }
         /*Esta función nos permite llenar el spinner para que el usuario pueda ver los tipos de solicitud*/
         private void LlenarTipo()

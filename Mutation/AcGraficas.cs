@@ -47,10 +47,10 @@ namespace Mutation
             Grafica.Model = Estados();
 
 
-            ds = await datos.graficadora();
+            //ds = await datos.graficadora();
 
             //Mandamos a llenar la lista
-            ListaPreguntas.Adapter = new RellenarGraficas(this,ds,nds);
+            //ListaPreguntas.Adapter = new RellenarGraficas(this,ds,nds);
             
             //Función automatica del spinner
             LlenarTipo();
@@ -109,8 +109,8 @@ namespace Mutation
 
             for (int i = 0; i <3; i++)
             {
-                ejex.Labels.Add(ds[i]);
-                s1.Items.Add(new ColumnItem(nds[i]));
+                //ejex.Labels.Add(ds[i]);
+                //s1.Items.Add(new ColumnItem(nds[i]));
             }
             //Creamos el modelo de graficas
             PlotModel m1 = new PlotModel();

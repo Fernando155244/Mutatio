@@ -43,14 +43,25 @@ namespace Mutation
             Spinner spTipo = this.FindViewById<Spinner>(Resource.Id.spGraficasTipoSolicitud);
             Spinner spEstatus = this.FindViewById<Spinner>(Resource.Id.spGraficasEstatus);
             Spinner spReferencias = this.FindViewById<Spinner>(Resource.Id.spGraficasReferencia);
+            Switch swcertificadas = this.FindViewById<Switch>(Resource.Id.swGraficasCertificadas);
+
+            int Referencia;
+            int cancelar;
+            if (swcertificadas.Selected) 
+            {
+                Referencia = 1;
+            }
+            else 
+            { 
+                Referencia= 0;
+            }
+            if()
+
+            ds = await datos.graficadora(spReferencias.SelectedItemPosition, spTipo.SelectedItemPosition);
 
             Grafica.Model = Estados();
-
-
-            //ds = await datos.graficadora();
-
             //Mandamos a llenar la lista
-            //ListaPreguntas.Adapter = new RellenarGraficas(this,ds,nds);
+            ListaPreguntas.Adapter = new RellenarGraficas(this,ds);
             
             //Función automatica del spinner
             LlenarTipo();
@@ -129,14 +140,12 @@ namespace Mutation
     internal class RellenarGraficas : BaseAdapter
     {
         private AcGraficas acGraficas;
-        private string[] ds;
-        private int[] nds;
+        private Dataset ds;
 
-        public RellenarGraficas(AcGraficas acGraficas, string[] ds, int[] nds)
+        public RellenarGraficas(AcGraficas acGraficas, Dataset ds)
         {
             this.acGraficas = acGraficas;
             this.ds = ds;
-            this.nds = nds;
         }
 
         public override int Count

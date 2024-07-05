@@ -66,26 +66,26 @@ namespace Mutation
                         //Si el resultado es 1 damos los resultados de que fue aceptada la solicitud
                         if (resultado == 2)
                         {
-                            //Hacemos visible la confirmación
+                            //Hacemos visible la cancelación de la solicitud
                             confirmacion.Visibility = ViewStates.Visible;
-                            //Damos la leyenda de confirmación
+                            //Damos la leyenda de cancelación
                             confirmacion.Text = $"🔘La solicitud fue Cancelada";
-                            //Hacemos visible la notificación (El lineart layout que dice si fuimos aceptados o no)
+                            //Hacemos visible la notificación (El lineart layout que dice si fuimos aceptados o no o cancelamos)
                             Notificacion.Visibility = ViewStates.Visible;
-                            //Damos imagen de positivo a la notificación
+                            //Damos imagen de cancelado a la notificación
                             ImgNotificacion.SetImageResource(Resource.Drawable.Neutro);
-                            //Damos titulo de ser correcta
+                            //Damos titulo de concejo por cancelar
                             TituloNotificacion.Text = "Si así lo descea puede hacer otra solicitud";
-                            //Damos una leyenda feliciatando al usuario
+                            //Damos una leyenda con las obsercaciones al cancelar al usuario
                             Observaciones.Text = $"{ds.Tables[0].Rows[0]["observaciones_cancelacion"].ToString()}";
                         }
                         else if (resultado == 5)
                         {
-                            //Hacemos visible la confirmación
+                            //Hacemos visible la Negativa
                             confirmacion.Visibility = ViewStates.Visible;
-                            //Damos la leyenda de confirmación
+                            //Damos la leyenda de necación de solicitud
                             confirmacion.Text = $"🔘La solicitud fue Denegada";
-                            //Hacemos visible la notificación (El lineart layout que dice si fuimos aceptados o no)
+                            //Hacemos visible la notificación (El lineart layout que dice si fuimos aceptados o no o cancelamos)
                             Notificacion.Visibility = ViewStates.Visible;
                             //Damos la imagen de denegación de solicitud
                             ImgNotificacion.SetImageResource(Resource.Drawable.Negativo);
@@ -212,36 +212,47 @@ namespace Mutation
             TextView Observaciones = this.FindViewById<TextView>(Resource.Id.txtObservacionesDato);
             if (this.Intent.GetIntExtra("Tipo", 0) == 0)
             {
+                //Si la solicitud es aceptada como real continuamos
                 if (Convert.ToInt32(ds.Tables[0].Rows[0]["solicitud_real"]) == 1)
                 {
+                    //Si la solicitud es cancelada mandamos esto
                     if (Convert.ToInt32(ds.Tables[0].Rows[0]["cancelada"]) == 1)
                     {
                         return 2;
                     }
+                    //Si la solicitud es marcada como 0 entonces significa que fue cancelada
                     else if (Convert.ToInt32(ds.Tables[0].Rows[0]["marcada"]) == 0)
                     {
-                        return 5;
+                        //Si la solicitud es validada, mandamos esto
+                        if (Convert.ToInt32(ds.Tables[0].Rows[0]["validada_dgp"]) == 1)
+                        {
+                            //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
+                            Estatus.Visibility = ViewStates.Visible;
+                            Estatus.Text = "🔘 La solicitud ha sido balidada";
+                            return 3;
+                        }
+                        //Si la solicitud es certificada mandamos esto
+                        else if (Convert.ToInt32(ds.Tables[0].Rows[0]["certificada_ur"]) == 1)
+                        {
+                            //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
+                            Estatus.Visibility = ViewStates.Visible;
+                            Estatus.Text = $"🔘La solicitud ha sido Certificada";
+                            return 4;
+                        }
+                        else
+                        {
+                            return 5;
+                        }
                     }
+                    //Si la solicitud fue marcada como 1 significa que fue aceptada
                     else if (Convert.ToInt32(ds.Tables[0].Rows[0]["marcada"]) == 1)
                     {
                         return 6;
                     }
-                    else if (Convert.ToInt32(ds.Tables[0].Rows[0]["validada_dgp"]) == 1)
-                    {
-                        //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
-                        Estatus.Visibility = ViewStates.Visible;
-                        Estatus.Text = "🔘 La solicitud ha sido balidada";
-                        return 3;
-                    }
-                    else if (Convert.ToInt32(ds.Tables[0].Rows[0]["certificada_ur"]) == 1)
-                    {
-                        //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
-                        Estatus.Visibility = ViewStates.Visible;
-                        Estatus.Text = $"🔘La solicitud ha sido Certificada";
-                        return 4;
-                    }
+                    //Si nada de esto se cumple mandamos esto
                     else { return 1; }
                 }
+                //Si la solicitud no es aceptada como verdadera mandamos esto
                 else
                 {
                     return 0;

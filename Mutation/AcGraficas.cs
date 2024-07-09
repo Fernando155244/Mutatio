@@ -13,7 +13,8 @@ using System.Linq;
 using System.Text;
 using OxyPlot.Xamarin.Android;
 using System.Runtime.CompilerServices;
-using Android.Service.Autofill;
+using System.Data;
+using static Android.Icu.Text.Transliterator;
 
 namespace Mutation
 {
@@ -22,12 +23,10 @@ namespace Mutation
     public class AcGraficas : Activity
     {
         clsDatos datos = new clsDatos();
-        Dataset ds;
-
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             /*Variables para pruebas*/
-            
+            DataSet ds;
             base.OnCreate(savedInstanceState);
 
             // Create your application here
@@ -44,31 +43,88 @@ namespace Mutation
             Spinner spEstatus = this.FindViewById<Spinner>(Resource.Id.spGraficasEstatus);
             Spinner spReferencias = this.FindViewById<Spinner>(Resource.Id.spGraficasReferencia);
             Switch swcertificadas = this.FindViewById<Switch>(Resource.Id.swGraficasCertificadas);
+            Switch swCanelada = this.FindViewById<Switch>(Resource.Id.swyGraficasCanceladas);
+            Button Actualizar = this.FindViewById<Button>(Resource.Id.btnActualizar);
+            Actualizar.Click += Actualizar_Click;
 
-            int Referencia;
+            int certificada;
             int cancelar;
-            if (swcertificadas.Selected) 
-            {
-                Referencia = 1;
-            }
-            else 
-            { 
-                Referencia= 0;
-            }
-            if()
 
-            ds = await datos.graficadora(spReferencias.SelectedItemPosition, spTipo.SelectedItemPosition);
-
-            Grafica.Model = Estados();
-            //Mandamos a llenar la lista
-            ListaPreguntas.Adapter = new RellenarGraficas(this,ds);
-            
             //Función automatica del spinner
             LlenarTipo();
             LlenarEstatus();
             LlenarGraficas();
 
+
+            if (swcertificadas.Selected)
+            {
+                certificada = 1;
+            }
+            else
+            {
+                certificada = 0;
+            }
+            if (swCanelada.Selected)
+            {
+                cancelar = 1;
+            }
+            else
+            {
+                cancelar = 0;
+            }
+
+            ds = await datos.graficadora(spReferencias.SelectedItemPosition, spTipo.SelectedItemPosition, certificada, cancelar, spEstatus.SelectedItemPosition);
+
+            //Mandamos a llenar la lista y grafica
+            ListaPreguntas.Adapter = new RellenarGraficas(this, ds, spReferencias.SelectedItemPosition);
+            Grafica.Model = Estados(ds);
+
+
+
         }
+
+        private async void Actualizar_Click(object sender, EventArgs e)
+        {
+            DataSet ds = new DataSet();
+            //Indexados
+            PlotView Grafica = this.FindViewById<PlotView>(Resource.Id.GrafGraficas);
+            ListView ListaPreguntas = this.FindViewById<ListView>(Resource.Id.lisGraficas);
+            Spinner spTipo = this.FindViewById<Spinner>(Resource.Id.spGraficasTipoSolicitud);
+            Spinner spEstatus = this.FindViewById<Spinner>(Resource.Id.spGraficasEstatus);
+            Spinner spReferencias = this.FindViewById<Spinner>(Resource.Id.spGraficasReferencia);
+            Switch swcertificadas = this.FindViewById<Switch>(Resource.Id.swGraficasCertificadas);
+            Switch swCanelada = this.FindViewById<Switch>(Resource.Id.swyGraficasCanceladas);
+            Button Actualizar = this.FindViewById<Button>(Resource.Id.btnActualizar);
+
+            int certificada;
+            int cancelar;
+
+
+
+            if (swcertificadas.Selected)
+            {
+                certificada = 1;
+            }
+            else
+            {
+                certificada = 0;
+            }
+            if (swCanelada.Selected)
+            {
+                cancelar = 1;
+            }
+            else
+            {
+                cancelar = 0;
+            }
+
+            ds = await datos.graficadora(spReferencias.SelectedItemPosition, spTipo.SelectedItemPosition, certificada, cancelar, spEstatus.SelectedItemPosition);
+
+            //Mandamos a llenar la lista y grafica
+            ListaPreguntas.Adapter = new RellenarGraficas(this, ds, spReferencias.SelectedItemPosition);
+            Grafica.Model = Estados(ds);
+        }
+
         private void LlenarTipo()
         {
             Spinner spTipo = this.FindViewById<Spinner>(Resource.Id.spGraficasTipoSolicitud);
@@ -99,60 +155,93 @@ namespace Mutation
             ArrayAdapter spInteres = new ArrayAdapter(this, Android.Resource.Layout.SimpleSpinnerItem);
 
             //Agregamos los valores de la tabla al arrayAdapter 
-            spInteres.Add("Todos");
-            spInteres.Add("Estado");
             spInteres.Add("Nivel Educativo");
+            spInteres.Add("Estado");
             //Ingresamos el adapter al spinner
             spTipo.Adapter = spInteres;
         }
-        private PlotModel Estados()
+        private PlotModel Estados(DataSet ds)
         {
+            Spinner spReferencias = this.FindViewById<Spinner>(Resource.Id.spGraficasReferencia);
             CategoryAxis ejex = new CategoryAxis();
             LinearAxis ejey = new LinearAxis();
             //al valor x le damos los nombres de los valores
             ejex.Position = AxisPosition.Bottom;
             //Le damos valores minimo y maximo
             ejey.Minimum = 0;
-            ejey.Maximum = 600;
+            ejey.Maximum = 0;
             ejey.Position = AxisPosition.Left;
             //Creamos los valores de las graficas
             ColumnSeries s1 = new ColumnSeries();
 
-            for (int i = 0; i <3; i++)
+
+            if (spReferencias.SelectedItemPosition == 0)
             {
-                //ejex.Labels.Add(ds[i]);
-                //s1.Items.Add(new ColumnItem(nds[i]));
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    ejex.Labels.Add(ds.Tables[0].Rows[i]["nivel"].ToString());
+                    s1.Items.Add(new ColumnItem(Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString())));
+                    if (Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString()) > ejey.Maximum)
+                    {
+                        ejey.Maximum = Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString());
+                    }
+                }
+                //Creamos el modelo de graficas
+                PlotModel m1 = new PlotModel();
+                //Le damos titulo a la grafica
+                m1.Title = "Productos";
+                //Le damos los formatos de x e y
+                m1.Axes.Add(ejey);
+                m1.Axes.Add(ejex);
+                //Le damos los valores a la grafica
+                m1.Series.Add(s1);
+                //Regresamos los valores ingresados 
+                return m1;
             }
-            //Creamos el modelo de graficas
-            PlotModel m1 = new PlotModel();
-            //Le damos titulo a la grafica
-            m1.Title = "Productos";
-            //Le damos los formatos de x e y
-            m1.Axes.Add(ejey);
-            m1.Axes.Add(ejex);
-            //Le damos los valores a la grafica
-            m1.Series.Add(s1);
-            //Regresamos los valores ingresados 
-            return m1;
+            else
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    ejex.Labels.Add(ds.Tables[0].Rows[i]["nombres"].ToString());
+                    s1.Items.Add(new ColumnItem(Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString())));
+                    if (Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString()) > ejey.Maximum)
+                    {
+                        ejey.Maximum = Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString());
+                    }
+                }
+                //Creamos el modelo de graficas
+                PlotModel m1 = new PlotModel();
+                //Le damos titulo a la grafica
+                m1.Title = "Productos";
+                //Le damos los formatos de x e y
+                m1.Axes.Add(ejey);
+                m1.Axes.Add(ejex);
+                //Le damos los valores a la grafica
+                m1.Series.Add(s1);
+                //Regresamos los valores ingresados 
+                return m1;
+            }
         }
     }
 
     internal class RellenarGraficas : BaseAdapter
     {
         private AcGraficas acGraficas;
-        private Dataset ds;
+        private DataSet ds;
+        private int Tipo;
 
-        public RellenarGraficas(AcGraficas acGraficas, Dataset ds)
+        public RellenarGraficas(AcGraficas acGraficas, DataSet ds, int Tipo)
         {
             this.acGraficas = acGraficas;
             this.ds = ds;
+            this.Tipo = Tipo;
         }
 
         public override int Count
         {
             get
             {
-                return ds.Length;
+                return ds.Tables[0].Rows.Count;
             }
         }
 
@@ -177,8 +266,16 @@ namespace Mutation
             }
             TextView Estado = vista.FindViewById<TextView>(Resource.Id.txtTabEstado);
             TextView Numeros = vista.FindViewById<TextView>(Resource.Id.txtTabNumeros);
-            Estado.Text = ds[position];
-            Numeros.Text = nds[position].ToString();
+            if (Tipo == 0)
+            {
+                Estado.Text = ds.Tables[0].Rows[position]["Nivel"].ToString();
+                Numeros.Text = ds.Tables[0].Rows[position]["Cant"].ToString();
+            }
+            else if (Tipo == 1)
+            {
+                Estado.Text = ds.Tables[0].Rows[position]["Nombre"].ToString();
+                Numeros.Text = ds.Tables[0].Rows[position]["Cant"].ToString();
+            }
             return vista;
         }
     }

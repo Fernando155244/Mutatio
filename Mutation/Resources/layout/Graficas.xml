@@ -11,7 +11,8 @@
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/lyGraficas">
+        android:id="@+id/lyGraficas"
+        android:gravity="center">
         <LinearLayout
             android:orientation="horizontal"
             android:minWidth="25px"
@@ -75,7 +76,8 @@
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lyGraficasCertificadas">
+            android:id="@+id/lyGraficasCertificadas"
+            android:gravity="center">
             <TextView
                 android:text="Certificadas:"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -94,7 +96,8 @@
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lyGraficasCanceladas">
+            android:id="@+id/lyGraficasCanceladas"
+            android:gravity="center">
             <TextView
                 android:text="Cancelados"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -125,11 +128,16 @@
                 android:id="@+id/spGraficasEstatus" />
 
         </LinearLayout>
+        <Button
+            android:text="Actualizar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnActualizar" />
         <ListView
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
-            android:layout_height="310.0dp"
+            android:layout_height="467.5dp"
             android:id="@+id/lisGraficas" />
         <LinearLayout
             android:orientation="horizontal"

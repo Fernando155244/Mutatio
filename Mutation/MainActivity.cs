@@ -5,6 +5,7 @@ using Android.Runtime;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 using System;
+using AlertDialog = Android.App.AlertDialog;
 
 namespace Mutation
 {
@@ -45,16 +46,20 @@ namespace Mutation
                 {
                     Toast.MakeText(this, $"Conexion exitosa", ToastLength.Long).Show();
                 }
-                else
-                {
-                    Toast.MakeText(this, $"Conexion invalida", ToastLength.Long).Show();
-                }
             }
-            catch//Si no logra conectarse damos redundancia de que no se pudo conectar
+            catch//Si no logra conectarse damos aviso de esto
             {
-                Toast.MakeText(this, $"Conexion invalida", ToastLength.Long).Show();
-                
+                AlertDialog a1 = new AlertDialog.Builder(this).Create();
+                a1.SetTitle("Alerta de red!");
+                a1.SetMessage("No hemos podido conectar con el servidor, favor de revisar su conexion WiFi");
+                a1.SetButton("Aceptar", btnOK);
+                a1.Show();
+
             }
+        }
+
+        private void btnOK(object sender, DialogClickEventArgs e)
+        {
         }
 
         private IDialogInterfaceOnClickListener Aceptar()
@@ -70,26 +75,45 @@ namespace Mutation
             TextView RFC = this.FindViewById<TextView>(Resource.Id.txtLoginrfcDato);
             TextView NoFolio = this.FindViewById<TextView>(Resource.Id.txtLoginFolioDato);
             Spinner spTipo = this.FindViewById<Spinner>(Resource.Id.spLoginTipoDato);
-            try
+            //Iniciamo el intento de conexion
+            if (NoFolio.Text == "" || RFC.Text == "")
             {
-                //Definimos una variable para saber si los datos son correctos o no y la rellenamos con los datos del login
-                bool Log = await datos.Sesion(Convert.ToInt32(NoFolio.Text), RFC.Text, spTipo.SelectedItemPosition);
-                if (Log)
-                {
-                    Intent Login = new Intent(this, typeof(AcConfirmación));
-                    Login.PutExtra("Folio", Convert.ToInt32(NoFolio.Text));
-                    Login.PutExtra("Tipo", spTipo.SelectedItemPosition);
-                    StartActivity(Login);
-                }
-                else
-                {
-                    Toast.MakeText(this, $"El RFC y/o el numero de Folio son incorrectos", ToastLength.Long).Show();
-                }
-
+                AlertDialog a1 = new AlertDialog.Builder(this).Create();
+                a1.SetTitle("Atención!");
+                a1.SetMessage("Uno o más campos están vacíos, verifique sus datos");
+                a1.SetButton("Aceptar", btnOK);
+                a1.Show();
             }
-            catch (Exception ex)
+            else
             {
-                Toast.MakeText(this, $"Algo salio mal por favor verifique su conexion a red o contacte con sistemas de la sep", ToastLength.Long).Show();
+                try
+                {
+                    //Definimos una variable para saber si los datos son correctos o no y la rellenamos con los datos del login
+                    bool Log = await datos.Sesion(Convert.ToInt32(NoFolio.Text), RFC.Text, spTipo.SelectedItemPosition);
+                    //Si los valores son correctos podremos avanzar
+                    if (Log)
+                    {
+                        //Creamos el intento y mandamso los valores correscpondientes
+                        Intent Login = new Intent(this, typeof(AcConfirmación));
+                        Login.PutExtra("Folio", Convert.ToInt32(NoFolio.Text));
+                        Login.PutExtra("Tipo", spTipo.SelectedItemPosition);
+                        //Iniciamos el intento 
+                        StartActivity(Login);
+                    }//Si no logramos entrar mandamos mensaje de error
+                    else
+                    {
+                        Toast.MakeText(this, $"El RFC y/o el numero de Folio son incorrectos", ToastLength.Long).Show();
+                    }
+
+                }//En caso de error mandamos mensaje
+                catch (Exception ex)
+                {
+                    AlertDialog a1 = new AlertDialog.Builder(this).Create();
+                    a1.SetTitle("Alerta de Sistema");
+                    a1.SetMessage("Ha ocurrido un error en la conexión, revise su conexión WiFi o intente más tarde.");
+                    a1.SetButton("OK", btnOK);
+                    a1.Show();
+                }
             }
         }
         /*Esta función nos permite llenar el spinner para que el usuario pueda ver los tipos de solicitud*/

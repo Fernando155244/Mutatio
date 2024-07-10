@@ -72,11 +72,22 @@ namespace Mutation
             }
             catch (Exception ex)
             {
-                Toast.MakeText(this,$"Error en los datos, intente de nuevo {ex}", ToastLength.Long).Show();
+                //Toast.MakeText(this,$"Error en los datos, intente de nuevo {ex}", ToastLength.Long).Show();
+                AlertDialog a1 = new AlertDialog.Builder(this).Create();
+                a1.SetTitle("Alerta!");
+                a1.SetMessage("Error en los datos, intente de nuevo {ex}");
+                a1.SetButton("OK", btnOK);
+                a1.Show();
             }
             
 
         }
+
+        private void btnOK(object sender, DialogClickEventArgs e)
+        {
+            Finish();
+        }
+
         /*Si los datos son correctos este boton nos permite ir a la proxima pantalla*/
         private void BtnConfirmacion_Click(object sender, EventArgs e)
         {
@@ -84,7 +95,6 @@ namespace Mutation
             Confirmado.PutExtra("Folio",this.Intent.GetIntExtra("Folio",0));
             Confirmado.PutExtra("Tipo", this.Intent.GetIntExtra("Tipo", 0));
             StartActivity(Confirmado);
-            DataSet dataSet = new DataSet();
         }
     }
 }

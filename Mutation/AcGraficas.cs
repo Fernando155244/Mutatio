@@ -46,7 +46,7 @@ namespace Mutation
             Switch swCanelada = this.FindViewById<Switch>(Resource.Id.swyGraficasCanceladas);
             Button Actualizar = this.FindViewById<Button>(Resource.Id.btnActualizar);
             Actualizar.Click += Actualizar_Click;
-
+            //Variables de definición
             int certificada;
             int cancelar;
 
@@ -55,7 +55,7 @@ namespace Mutation
             LlenarEstatus();
             LlenarGraficas();
 
-
+            //Definimos los valores segun lo que se decida en los switch
             if (swcertificadas.Selected)
             {
                 certificada = 1;
@@ -72,15 +72,28 @@ namespace Mutation
             {
                 cancelar = 0;
             }
+            //Iniciamos el intento
+            try
+            {
+                //Mandamos a llamar la función acincrona
+                ds = await datos.graficadora(spReferencias.SelectedItemPosition, spTipo.SelectedItemPosition, certificada, cancelar, spEstatus.SelectedItemPosition);
 
-            ds = await datos.graficadora(spReferencias.SelectedItemPosition, spTipo.SelectedItemPosition, certificada, cancelar, spEstatus.SelectedItemPosition);
-
-            //Mandamos a llenar la lista y grafica
-            ListaPreguntas.Adapter = new RellenarGraficas(this, ds, spReferencias.SelectedItemPosition);
-            Grafica.Model = Estados(ds);
-
-
-
+                //Mandamos a llenar la lista y grafica
+                ListaPreguntas.Adapter = new RellenarGraficas(this, ds, spReferencias.SelectedItemPosition);
+                Grafica.Model = Estados(ds);
+            }
+            catch (Exception ex)//En  caso de fallar se manda un mensaje de alerta
+            {
+                AlertDialog a1 = new AlertDialog.Builder(this).Create();
+                a1.SetTitle("Alerta!");
+                a1.SetMessage($"Se ha detectado un error, comuníquese con departamento de sistemas\n{ex}");
+                a1.SetButton("Aceptar", btnOK);
+                a1.Show();
+            }
+        }
+        private void btnOK(object sender, DialogClickEventArgs e)
+        {
+            Finish();
         }
 
         private async void Actualizar_Click(object sender, EventArgs e)
@@ -96,11 +109,16 @@ namespace Mutation
             Switch swCanelada = this.FindViewById<Switch>(Resource.Id.swyGraficasCanceladas);
             Button Actualizar = this.FindViewById<Button>(Resource.Id.btnActualizar);
 
+            //Variables de definición
             int certificada;
             int cancelar;
 
+            //Función automatica del spinner
+            LlenarTipo();
+            LlenarEstatus();
+            LlenarGraficas();
 
-
+            //Definimos los valores segun lo que se decida en los switch
             if (swcertificadas.Selected)
             {
                 certificada = 1;
@@ -117,12 +135,24 @@ namespace Mutation
             {
                 cancelar = 0;
             }
+            //Iniciamos el intento
+            try
+            {
+                //Mandamos a llamar la función acincrona
+                ds = await datos.graficadora(spReferencias.SelectedItemPosition, spTipo.SelectedItemPosition, certificada, cancelar, spEstatus.SelectedItemPosition);
 
-            ds = await datos.graficadora(spReferencias.SelectedItemPosition, spTipo.SelectedItemPosition, certificada, cancelar, spEstatus.SelectedItemPosition);
-
-            //Mandamos a llenar la lista y grafica
-            ListaPreguntas.Adapter = new RellenarGraficas(this, ds, spReferencias.SelectedItemPosition);
-            Grafica.Model = Estados(ds);
+                //Mandamos a llenar la lista y grafica
+                ListaPreguntas.Adapter = new RellenarGraficas(this, ds, spReferencias.SelectedItemPosition);
+                Grafica.Model = Estados(ds);
+            }
+            catch (Exception ex)//En  caso de fallar se manda un mensaje de alerta
+            {
+                AlertDialog a1 = new AlertDialog.Builder(this).Create();
+                a1.SetTitle("Alerta!");
+                a1.SetMessage($"Se ha detectado un error, comuníquese con departamento de sistemas\n{ex}");
+                a1.SetButton("Aceptar", btnOK);
+                a1.Show();
+            }
         }
 
         private void LlenarTipo()

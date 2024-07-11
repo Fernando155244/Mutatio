@@ -41,7 +41,7 @@
             android:layout_height="match_parent"
             android:id="@+id/txtPreguntasDatos" />
         <TextView
-            android:text="Para más información comuniquese al correo: correodeejemplo@dominio.gob.mx"
+            android:text="Para más información comuniquese al correo: cambiosinter@nube.sep.gob.mx"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

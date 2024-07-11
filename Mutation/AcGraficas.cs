@@ -333,7 +333,6 @@ namespace Mutation
             {
                 try
                 {
-                    ds = Datos.graficadora(selectedItemPosition1, certificada, cancelar, selectedItemPosition2, Tipo);
                     //Declaración de vista
                     if (vista == null)
                     {
@@ -356,6 +355,7 @@ namespace Mutation
                 }
                 catch (Exception x)
                 {
+                    ds = Datos.graficadora(selectedItemPosition1, certificada, cancelar, selectedItemPosition2, Tipo);
                     //Toast.MakeText(this,$"Error en los datos, intente de nuevo {ex}", ToastLength.Long).Show();
                     AlertDialog a1 = new AlertDialog.Builder(this.acGraficas).Create();
                     a1.SetTitle("Alerta!");

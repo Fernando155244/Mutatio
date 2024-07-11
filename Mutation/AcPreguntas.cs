@@ -18,7 +18,30 @@ namespace Mutation
     public class AcPreguntas : Activity
     {
         //Lista de preguntas fijas
-        private String[] ds = { "¿Cuántos han sido beneficiados?", "¿Cuanto tarda la transición?", "¿Tengo que tener casa alla antes de hacer la certificación?", "¿Me regalan el departamento?", "¿Ustedes pagan la mudanza?" };
+        private String[] ds = 
+        {
+            "¿Cuántos han sido beneficiados?",
+            "¿La página https://cambiosinterestatales.sep.gob.mx es para Cambios dentro del mismo Estado?", 
+            "¿Hay diferencia entre el Proceso de Cambios y en el Proceso de Permutas de Adscripción de Estado a Estado?", 
+            "¿El participar en los procesos garantiza que mi cambio o permuta sea autorizado?", 
+            "¿En qué consiste el Proceso de Cambios de Adscripción de Estado a Estado?", 
+            "¿En qué consiste el Proceso de Permutas de Adscripción de Estado a Estado?", 
+            "¿Puedo elegir la ubicación en el Proceso de Cambios o Permutas de Adscripción de Estado a Estado?", 
+            "¿Es posible que el sistema me registre en el proceso incorrecto, es decir, que inicie mi registro en cambios y me pase a permutas?", 
+            "Me equivoque en el registro, seleccione incorrectamente Cambios cuando quiero solicitar Permuta o viceversa, ¿Qué puedo hacer para corregir?", 
+            "No tengo el número de solicitud ya que no concluí el registro, ¿Cómo lo obtengo?", "¿No encuentro mi categoría en el combo del nivel educativo en el que me registré?", 
+            "¿Cómo consulto o como se cuál es mi categoría?", 
+            "Ya consulté mi categoría, revisando mi talón de pago y el Sistema me indica que no se encontraron resultados, ¿qué procede?", 
+            "No puedo imprimir, ya que me aparece que no tengo nombramientos registrados, ¿qué hago?", 
+            "Descargue mi solicitud, pero está en blanco ¿cómo lo soluciono?", "No ubico los datos para registrar mi unidad y subunidad, ¿Cómo o de donde los obtengo?", 
+            "¿Participo en los Procesos de Cambios y Permutas de Adscripción de Estado a Estado solo con el registro?",
+            "¿Que documentos debo anexar a mi solicitud?",
+            "¿En dónde entrego mi solicitud y documentos?",
+            "No me llega el correo de registro, ¿Qué pasa en este caso, como lo obtengo?",
+            "Deseo cancelar mi participación en el Proceso de Cambios de Adscripción de Estado a Estado ¿Qué debo hacer?",
+            "Deseo cancelar mi participación en el Proceso de Permutas de Adscripción de Estado a Estado ¿Qué debo hacer?"
+
+        };
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);

@@ -75,7 +75,7 @@ namespace Mutation
                 //Toast.MakeText(this,$"Error en los datos, intente de nuevo {ex}", ToastLength.Long).Show();
                 AlertDialog a1 = new AlertDialog.Builder(this).Create();
                 a1.SetTitle("Alerta!");
-                a1.SetMessage("Error en los datos, intente de nuevo {ex}");
+                a1.SetMessage($"Error en los datos, intente de nuevo {ex}");
                 a1.SetButton("OK", btnOK);
                 a1.Show();
             }

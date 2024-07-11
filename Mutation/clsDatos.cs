@@ -84,7 +84,7 @@ namespace Mutation
             //regresamos el valor
             return ds;
         }
-        private DataSet graficas(int referencias, int tipo, int certificadas, int canceladas, int status)
+        public DataSet graficadora(int referencias, int tipo, int certificadas, int canceladas, int status)
         {
             //Hacemos una conexion con el servicio en linea
             Conexion.Mutation ws = new Conexion.Mutation();
@@ -94,10 +94,6 @@ namespace Mutation
             ds = ws.Graficas(referencias, tipo, certificadas, canceladas,status);
             //regresamos el valor
             return ds;
-        }
-        public Task<DataSet> graficadora(int referencias, int tipo, int certificadas, int canceladas, int status)
-        {
-            return Task.Run(() => graficas(referencias, tipo, certificadas, canceladas, status));
         }
     }
 }

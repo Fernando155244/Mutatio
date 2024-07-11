@@ -15,6 +15,10 @@ using OxyPlot.Xamarin.Android;
 using System.Runtime.CompilerServices;
 using System.Data;
 using static Android.Icu.Text.Transliterator;
+using System.Linq.Expressions;
+using System.Security.Cryptography;
+using Microsoft.SqlServer.Server;
+using System.Threading.Tasks;
 
 namespace Mutation
 {
@@ -23,6 +27,18 @@ namespace Mutation
     public class AcGraficas : Activity
     {
         clsDatos datos = new clsDatos();
+
+        PlotView Grafica;
+        ListView ListaPreguntas;
+        Spinner spTipo ;
+        Spinner spEstatus ;
+        Spinner spReferencias ;
+        Switch swcertificadas;
+        Switch swCanelada;
+        Button Actualizar;
+        //Variables de definición
+        int certificada;
+        int cancelar;
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             /*Variables para pruebas*/
@@ -37,18 +53,16 @@ namespace Mutation
             imgLogo.SetImageResource(Resource.Drawable.Logo);
 
             //Indexados
-            PlotView Grafica = this.FindViewById<PlotView>(Resource.Id.GrafGraficas);
-            ListView ListaPreguntas = this.FindViewById<ListView>(Resource.Id.lisGraficas);
-            Spinner spTipo = this.FindViewById<Spinner>(Resource.Id.spGraficasTipoSolicitud);
-            Spinner spEstatus = this.FindViewById<Spinner>(Resource.Id.spGraficasEstatus);
-            Spinner spReferencias = this.FindViewById<Spinner>(Resource.Id.spGraficasReferencia);
-            Switch swcertificadas = this.FindViewById<Switch>(Resource.Id.swGraficasCertificadas);
-            Switch swCanelada = this.FindViewById<Switch>(Resource.Id.swyGraficasCanceladas);
-            Button Actualizar = this.FindViewById<Button>(Resource.Id.btnActualizar);
+            Grafica = this.FindViewById<PlotView>(Resource.Id.GrafGraficas);
+            ListaPreguntas = this.FindViewById<ListView>(Resource.Id.lisGraficas);
+            spTipo = this.FindViewById<Spinner>(Resource.Id.spGraficasTipoSolicitud);
+            spEstatus = this.FindViewById<Spinner>(Resource.Id.spGraficasEstatus);
+            spReferencias = this.FindViewById<Spinner>(Resource.Id.spGraficasReferencia);
+            swcertificadas = this.FindViewById<Switch>(Resource.Id.swGraficasCertificadas);
+            swCanelada = this.FindViewById<Switch>(Resource.Id.swyGraficasCanceladas);
+            Actualizar = this.FindViewById<Button>(Resource.Id.btnActualizar);
             Actualizar.Click += Actualizar_Click;
-            //Variables de definición
-            int certificada;
-            int cancelar;
+            
 
             //Función automatica del spinner
             LlenarTipo();
@@ -76,10 +90,10 @@ namespace Mutation
             try
             {
                 //Mandamos a llamar la función acincrona
-                ds = await datos.graficadora(spReferencias.SelectedItemPosition, spTipo.SelectedItemPosition, certificada, cancelar, spEstatus.SelectedItemPosition);
+                ds = datos.graficadora(spReferencias.SelectedItemPosition, spTipo.SelectedItemPosition, certificada, cancelar, spEstatus.SelectedItemPosition);
 
                 //Mandamos a llenar la lista y grafica
-                ListaPreguntas.Adapter = new RellenarGraficas(this, ds, spReferencias.SelectedItemPosition);
+                ListaPreguntas.Adapter = new RellenarGraficas(this, ds, spReferencias.SelectedItemPosition, spReferencias.SelectedItemPosition, spTipo.SelectedItemPosition, certificada, cancelar, spEstatus.SelectedItemPosition);
                 Grafica.Model = Estados(ds);
             }
             catch (Exception ex)//En  caso de fallar se manda un mensaje de alerta
@@ -98,25 +112,10 @@ namespace Mutation
 
         private async void Actualizar_Click(object sender, EventArgs e)
         {
-            DataSet ds = new DataSet();
-            //Indexados
-            PlotView Grafica = this.FindViewById<PlotView>(Resource.Id.GrafGraficas);
-            ListView ListaPreguntas = this.FindViewById<ListView>(Resource.Id.lisGraficas);
-            Spinner spTipo = this.FindViewById<Spinner>(Resource.Id.spGraficasTipoSolicitud);
-            Spinner spEstatus = this.FindViewById<Spinner>(Resource.Id.spGraficasEstatus);
-            Spinner spReferencias = this.FindViewById<Spinner>(Resource.Id.spGraficasReferencia);
-            Switch swcertificadas = this.FindViewById<Switch>(Resource.Id.swGraficasCertificadas);
-            Switch swCanelada = this.FindViewById<Switch>(Resource.Id.swyGraficasCanceladas);
-            Button Actualizar = this.FindViewById<Button>(Resource.Id.btnActualizar);
 
             //Variables de definición
             int certificada;
             int cancelar;
-
-            //Función automatica del spinner
-            LlenarTipo();
-            LlenarEstatus();
-            LlenarGraficas();
 
             //Definimos los valores segun lo que se decida en los switch
             if (swcertificadas.Selected)
@@ -139,10 +138,10 @@ namespace Mutation
             try
             {
                 //Mandamos a llamar la función acincrona
-                ds = await datos.graficadora(spReferencias.SelectedItemPosition, spTipo.SelectedItemPosition, certificada, cancelar, spEstatus.SelectedItemPosition);
+                DataSet ds = datos.graficadora(spReferencias.SelectedItemPosition, spTipo.SelectedItemPosition, certificada, cancelar, spEstatus.SelectedItemPosition);
 
                 //Mandamos a llenar la lista y grafica
-                ListaPreguntas.Adapter = new RellenarGraficas(this, ds, spReferencias.SelectedItemPosition);
+                ListaPreguntas.Adapter = new RellenarGraficas(this, ds, spReferencias.SelectedItemPosition, spReferencias.SelectedItemPosition, spTipo.SelectedItemPosition, certificada, cancelar, spEstatus.SelectedItemPosition);
                 Grafica.Model = Estados(ds);
             }
             catch (Exception ex)//En  caso de fallar se manda un mensaje de alerta
@@ -203,52 +202,59 @@ namespace Mutation
             ejey.Position = AxisPosition.Left;
             //Creamos los valores de las graficas
             ColumnSeries s1 = new ColumnSeries();
-
-
-            if (spReferencias.SelectedItemPosition == 0)
+            //Creamos el modelo de graficas
+            PlotModel m1 = new PlotModel();
+            try
             {
-                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+
+                if (spReferencias.SelectedItemPosition == 0)
                 {
-                    ejex.Labels.Add(ds.Tables[0].Rows[i]["nivel"].ToString());
-                    s1.Items.Add(new ColumnItem(Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString())));
-                    if (Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString()) > ejey.Maximum)
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
-                        ejey.Maximum = Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString());
+                        ejex.Labels.Add(ds.Tables[0].Rows[i]["nivel"].ToString());
+                        s1.Items.Add(new ColumnItem(Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString())));
+                        if (Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString()) > ejey.Maximum)
+                        {
+                            ejey.Maximum = Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString());
+                        }
                     }
+                    
+                    //Le damos titulo a la grafica
+                    m1.Title = "Productos";
+                    //Le damos los formatos de x e y
+                    m1.Axes.Add(ejey);
+                    m1.Axes.Add(ejex);
+                    //Le damos los valores a la grafica
+                    m1.Series.Add(s1);
+                    //Regresamos los valores ingresados 
+                    return m1;
                 }
-                //Creamos el modelo de graficas
-                PlotModel m1 = new PlotModel();
-                //Le damos titulo a la grafica
-                m1.Title = "Productos";
-                //Le damos los formatos de x e y
-                m1.Axes.Add(ejey);
-                m1.Axes.Add(ejex);
-                //Le damos los valores a la grafica
-                m1.Series.Add(s1);
-                //Regresamos los valores ingresados 
-                return m1;
+                else
+                {
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        ejex.Labels.Add(ds.Tables[0].Rows[i]["nombre"].ToString());
+                        s1.Items.Add(new ColumnItem(Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString())));
+                        if (Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString()) > ejey.Maximum)
+                        {
+                            ejey.Maximum = Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString());
+                        }
+                    }
+                    //Creamos el modelo de graficas
+                    //PlotModel m1 = new PlotModel();
+                    //Le damos titulo a la grafica
+                    m1.Title = "Productos";
+                    //Le damos los formatos de x e y
+                    m1.Axes.Add(ejey);
+                    m1.Axes.Add(ejex);
+                    //Le damos los valores a la grafica
+                    m1.Series.Add(s1);
+                    //Regresamos los valores ingresados 
+                    return m1;
+                }
             }
-            else
-            {
-                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-                {
-                    ejex.Labels.Add(ds.Tables[0].Rows[i]["nombres"].ToString());
-                    s1.Items.Add(new ColumnItem(Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString())));
-                    if (Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString()) > ejey.Maximum)
-                    {
-                        ejey.Maximum = Convert.ToInt32(ds.Tables[0].Rows[i]["Cant"].ToString());
-                    }
-                }
-                //Creamos el modelo de graficas
-                PlotModel m1 = new PlotModel();
-                //Le damos titulo a la grafica
-                m1.Title = "Productos";
-                //Le damos los formatos de x e y
-                m1.Axes.Add(ejey);
-                m1.Axes.Add(ejex);
-                //Le damos los valores a la grafica
-                m1.Series.Add(s1);
-                //Regresamos los valores ingresados 
+            catch {
+                m1 =null;
                 return m1;
             }
         }
@@ -259,19 +265,29 @@ namespace Mutation
         private AcGraficas acGraficas;
         private DataSet ds;
         private int Tipo;
+        private int selectedItemPosition1;
+        private int certificada;
+        private int cancelar;
+        private int selectedItemPosition2;
 
-        public RellenarGraficas(AcGraficas acGraficas, DataSet ds, int Tipo)
+
+        public RellenarGraficas(AcGraficas acGraficas, DataSet ds, int Tipo, int selectedItemPosition, int selectedItemPosition1, int certificada, int cancelar, int selectedItemPosition2)
         {
             this.acGraficas = acGraficas;
             this.ds = ds;
             this.Tipo = Tipo;
+            this.selectedItemPosition1 = selectedItemPosition1;
+            this.certificada = certificada;
+            this.cancelar = cancelar;
+            this.selectedItemPosition2 = selectedItemPosition2;
         }
 
         public override int Count
         {
+            
             get
             {
-                return ds.Tables[0].Rows.Count;
+                    return ds.Tables[0].Rows.Count;
             }
         }
 
@@ -282,31 +298,80 @@ namespace Mutation
 
         public override long GetItemId(int position)
         {
-            return position;
+                return position;
         }
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             View vista = convertView;
-            //Declaración de vista
-            if (vista == null)
+            clsDatos Datos = new clsDatos();
+            try
             {
-                //Aqui aparte de declarar los valores basicos declaramos el uso del diseño TabEmpresa para la fila
-                vista = acGraficas.LayoutInflater.Inflate(Resource.Layout.ModGraficos, null);
+                
+                //Declaración de vista
+                if (vista == null)
+                {
+                    //Aqui aparte de declarar los valores basicos declaramos el uso del diseño TabEmpresa para la fila
+                    vista = acGraficas.LayoutInflater.Inflate(Resource.Layout.ModGraficos, null);
+                }
+                TextView Estado = vista.FindViewById<TextView>(Resource.Id.txtTabEstado);
+                TextView Numeros = vista.FindViewById<TextView>(Resource.Id.txtTabNumeros);
+                if (Tipo == 0)
+                {
+                    Estado.Text = ds.Tables[0].Rows[position]["Nivel"].ToString();
+                    Numeros.Text = ds.Tables[0].Rows[position]["Cant"].ToString();
+                }
+                else if (Tipo == 1)
+                {
+                    Estado.Text = ds.Tables[0].Rows[position]["nombre"].ToString();
+                    Numeros.Text = ds.Tables[0].Rows[position]["Cant"].ToString();
+                }
+                return vista;
+
             }
-            TextView Estado = vista.FindViewById<TextView>(Resource.Id.txtTabEstado);
-            TextView Numeros = vista.FindViewById<TextView>(Resource.Id.txtTabNumeros);
-            if (Tipo == 0)
+            catch (Exception ex)
             {
-                Estado.Text = ds.Tables[0].Rows[position]["Nivel"].ToString();
-                Numeros.Text = ds.Tables[0].Rows[position]["Cant"].ToString();
+                try
+                {
+                    ds = Datos.graficadora(selectedItemPosition1, certificada, cancelar, selectedItemPosition2, Tipo);
+                    //Declaración de vista
+                    if (vista == null)
+                    {
+                        //Aqui aparte de declarar los valores basicos declaramos el uso del diseño TabEmpresa para la fila
+                        vista = acGraficas.LayoutInflater.Inflate(Resource.Layout.ModGraficos, null);
+                    }
+                    TextView Estado = vista.FindViewById<TextView>(Resource.Id.txtTabEstado);
+                    TextView Numeros = vista.FindViewById<TextView>(Resource.Id.txtTabNumeros);
+                    if (Tipo == 0)
+                    {
+                        Estado.Text = ds.Tables[0].Rows[position]["Nivel"].ToString();
+                        Numeros.Text = ds.Tables[0].Rows[position]["Cant"].ToString();
+                    }
+                    else if (Tipo == 1)
+                    {
+                        Estado.Text = ds.Tables[0].Rows[position]["nombre"].ToString();
+                        Numeros.Text = ds.Tables[0].Rows[position]["Cant"].ToString();
+                    }
+                    return vista;
+                }
+                catch (Exception x)
+                {
+                    //Toast.MakeText(this,$"Error en los datos, intente de nuevo {ex}", ToastLength.Long).Show();
+                    AlertDialog a1 = new AlertDialog.Builder(this.acGraficas).Create();
+                    a1.SetTitle("Alerta!");
+                    a1.SetMessage($"Error en los datos, intente de nuevo {x}");
+                    a1.SetButton("OK", btnOK);
+                    a1.Show();
+                    return null;
+                }
+
             }
-            else if (Tipo == 1)
-            {
-                Estado.Text = ds.Tables[0].Rows[position]["Nombre"].ToString();
-                Numeros.Text = ds.Tables[0].Rows[position]["Cant"].ToString();
-            }
-            return vista;
+        }
+
+        private void btnOK(object sender, DialogClickEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
+    
 }

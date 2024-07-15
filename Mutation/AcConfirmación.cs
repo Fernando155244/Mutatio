@@ -54,7 +54,7 @@ namespace Mutation
                 if (this.Intent.GetIntExtra("Tipo", 0) == 0)
                 {
                     solicitud.Text = "Cambios";
-                    Nombre.Text = $"{ds.Tables[0].Rows[0]["paterno"].ToString()} {ds.Tables[0].Rows[0]["materno"].ToString()} {ds.Tables[0].Rows[0]["nombres"].ToString()}";
+                    Nombre.Text = $"{ds.Tables[0].Rows[0]["paterno"].ToString()} {ds.Tables[0].Rows[0]["materno"].ToString()} {ds.Tables[0].Rows[0]["nombre"].ToString()}";
                     Actual.Text = $"{ds.Tables[0].Rows[0]["Actual"].ToString()}";
                     Opcion1.Text = $"{ds.Tables[0].Rows[0]["Opcion1"].ToString()}";
                     Opcion2.Text = $"{ds.Tables[0].Rows[0]["Opcion2"].ToString()}";

@@ -51,15 +51,23 @@ namespace Mutation
                 Asking.Click += Asking_Click;
                 //Con esto ingresamos los dtos de la consulta
                 datSolicitud.Text = $"Solicitud de Cambios Numero: {this.Intent.GetIntExtra("Folio", 0)}";
-                //Con esto ingresamos el nombre del usuario
-                datosSolicitante.Text = $"Del trabajador: {ds.Tables[0].Rows[0]["paterno"].ToString()} {ds.Tables[0].Rows[0]["materno"].ToString()} {ds.Tables[0].Rows[0]["nombres"].ToString()}";
                 Notificacion.Visibility = ViewStates.Invisible;
                 if (this.Intent.GetIntExtra("Tipo", 0) == 0)
                 {
+                    //Con esto ingresamos el nombre del usuario
+                    datosSolicitante.Text = $"Del trabajador: {ds.Tables[0].Rows[0]["paterno"].ToString()} {ds.Tables[0].Rows[0]["materno"].ToString()} {ds.Tables[0].Rows[0]["nombre"].ToString()}";
                     //Iniciamos las restricciónes para definir estados
                     //Recibimos el verdadero o falso del usuario
                     if (resultado != 1)
                     {
+                        /*
+                          Orden
+                          real
+                          certificada
+                          validada
+                          marcada
+                          cancelada
+                         */
                         //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
                         recibir.Visibility = ViewStates.Visible;
                         recibir.Text = $"🔘Solicitud Registrada {ds.Tables[0].Rows[0]["f_registro"].ToString()}";
@@ -126,6 +134,8 @@ namespace Mutation
                 }
                 else if (this.Intent.GetIntExtra("Tipo", 0) == 1)
                 {
+                    //Con esto ingresamos el nombre del usuario
+                    datosSolicitante.Text = $"Del trabajador: {ds.Tables[0].Rows[0]["paterno"].ToString()} {ds.Tables[0].Rows[0]["materno"].ToString()} {ds.Tables[0].Rows[0]["nombres"].ToString()}";
                     //Iniciamos las restricciónes para definir estados
                     //Recibimos el verdadero o falso del usuario
                     if (resultado != 1)
@@ -211,6 +221,14 @@ namespace Mutation
 
         private int Llenar()
         {
+            /*
+             * Order
+             real
+            certificada
+            validada
+            marcada
+            cancelada
+             */
             clsDatos datos = new clsDatos();
             ds = datos.Iniciar(this.Intent.GetIntExtra("Folio", 0), this.Intent.GetIntExtra("Tipo", 0));
             //Esto es solo para mostrar que se envia, se tiene que borrar
@@ -218,8 +236,11 @@ namespace Mutation
             //Indexados
             TextView Estatus = this.FindViewById<TextView>(Resource.Id.txtInicioEstatusDato);
             TextView Observaciones = this.FindViewById<TextView>(Resource.Id.txtObservacionesDato);
-            try
-            {
+            TextView Registrada = this.FindViewById<TextView>(Resource.Id.txtInicioRegistrado);
+            TextView Certificada = this.FindViewById<TextView>(Resource.Id.txtInicioCertificada);
+            TextView Validada = this.FindViewById<TextView>(Resource.Id.txtInicioValidada);
+            /*try
+            {*/
                 if (this.Intent.GetIntExtra("Tipo", 0) == 0)
                 {
                     //Si la solicitud es aceptada como real continuamos
@@ -228,6 +249,31 @@ namespace Mutation
                         //Si la solicitud es cancelada mandamos esto
                         if (Convert.ToInt32(ds.Tables[0].Rows[0]["cancelada"]) == 1)
                         {
+                            if (Convert.ToInt32(ds.Tables[0].Rows[0]["validada_dgp"]) == 1)
+                            {
+                                //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
+                                Estatus.Visibility = ViewStates.Visible;
+                                Estatus.Text = "🔘 La solicitud ha sido balidada";
+                                Validada.Visibility = ViewStates.Visible;
+                                Validada.Text = "🔘 La solicitud ha sido balidada";
+                                Certificada.Visibility = ViewStates.Visible;
+                                Certificada.Text = $"🔘La solicitud ha sido Certificada";
+                                Registrada.Visibility = ViewStates.Visible;
+                                Registrada.Text = $"🔘La solicitud ha sido Registrada";
+                                return 3;
+                            }
+                            //Si la solicitud es certificada mandamos esto
+                            else if (Convert.ToInt32(ds.Tables[0].Rows[0]["certificada_ur"]) == 1)
+                            {
+                                //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
+                                Estatus.Visibility = ViewStates.Visible;
+                                Estatus.Text = $"🔘La solicitud ha sido Certificada";
+                                Certificada.Visibility = ViewStates.Visible;
+                                Certificada.Text = $"🔘La solicitud ha sido Certificada";
+                                Registrada.Visibility = ViewStates.Visible;
+                                Registrada.Text = $"🔘La solicitud ha sido Registrada";
+                                return 4;
+                            }
                             return 2;
                         }
                         //Si la solicitud es marcada como 0 entonces significa que fue cancelada
@@ -239,6 +285,12 @@ namespace Mutation
                                 //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
                                 Estatus.Visibility = ViewStates.Visible;
                                 Estatus.Text = "🔘 La solicitud ha sido balidada";
+                                Validada.Visibility = ViewStates.Visible;
+                                Validada.Text = "🔘 La solicitud ha sido balidada";
+                                Certificada.Visibility = ViewStates.Visible;
+                                Certificada.Text = $"🔘La solicitud ha sido Certificada";
+                                Registrada.Visibility = ViewStates.Visible;
+                                Registrada.Text = $"🔘La solicitud ha sido Registrada";
                                 return 3;
                             }
                             //Si la solicitud es certificada mandamos esto
@@ -247,12 +299,121 @@ namespace Mutation
                                 //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
                                 Estatus.Visibility = ViewStates.Visible;
                                 Estatus.Text = $"🔘La solicitud ha sido Certificada";
+                                Certificada.Visibility = ViewStates.Visible;
+                                Certificada.Text = $"🔘La solicitud ha sido Certificada";
+                                Registrada.Visibility = ViewStates.Visible;
+                                Registrada.Text = $"🔘La solicitud ha sido Registrada";
                                 return 4;
                             }
                             else
                             {
+                                if (Convert.ToInt32(ds.Tables[0].Rows[0]["validada_dgp"]) == 1)
+                                {
+                                    //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
+                                    Estatus.Visibility = ViewStates.Visible;
+                                    Estatus.Text = "🔘 La solicitud ha sido balidada";
+                                    Validada.Visibility = ViewStates.Visible;
+                                    Validada.Text = "🔘 La solicitud ha sido balidada";
+                                    Certificada.Visibility = ViewStates.Visible;
+                                    Certificada.Text = $"🔘La solicitud ha sido Certificada";
+                                    Registrada.Visibility = ViewStates.Visible;
+                                    Registrada.Text = $"🔘La solicitud ha sido Registrada";
+                                    return 3;
+                                }
+                                //Si la solicitud es certificada mandamos esto
+                                else if (Convert.ToInt32(ds.Tables[0].Rows[0]["certificada_ur"]) == 1)
+                                {
+                                    //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
+                                    Estatus.Visibility = ViewStates.Visible;
+                                    Estatus.Text = $"🔘La solicitud ha sido Certificada";
+                                    Certificada.Visibility = ViewStates.Visible;
+                                    Certificada.Text = $"🔘La solicitud ha sido Certificada";
+                                    Registrada.Visibility = ViewStates.Visible;
+                                    Registrada.Text = $"🔘La solicitud ha sido Registrada";
+                                    return 4;
+                                }
                                 return 5;
                             }
+                        }
+                        //Si la solicitud fue marcada como 1 significa que fue aceptada
+                        if (Convert.ToInt32(ds.Tables[0].Rows[0]["marcada"]) == 1)
+                        {
+                            return 6;
+                        }
+                        //Si nada de esto se cumple mandamos esto
+                        else { return 1; }
+                    }
+                    //Si la solicitud no es aceptada como verdadera mandamos esto
+                    else
+                    {
+                        return 0;
+                    }
+                }
+                else if (this.Intent.GetIntExtra("Tipo", 0) == 1)
+                {
+
+                    if (Convert.ToInt32(ds.Tables[0].Rows[0]["solicitud_real"]) == 1)
+                    {
+                        //Si la solicitud es validada, mandamos esto
+                        if (Convert.ToInt32(ds.Tables[0].Rows[0]["validada_dgp"]) == 1)
+                        {
+                            //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
+                            Estatus.Visibility = ViewStates.Visible;
+                            Estatus.Text = "🔘 La solicitud ha sido balidada";
+                            Validada.Visibility = ViewStates.Visible;
+                            Validada.Text = "🔘 La solicitud ha sido balidada";
+                            Certificada.Visibility = ViewStates.Visible;
+                            Certificada.Text = $"🔘La solicitud ha sido Certificada";
+                            Registrada.Visibility = ViewStates.Visible;
+                            Registrada.Text = $"🔘La solicitud ha sido Registrada";
+                        }
+                        //Si la solicitud es certificada mandamos esto
+                        else if (Convert.ToInt32(ds.Tables[0].Rows[0]["certificada_ur"]) == 1)
+                        {
+                            //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
+                            Estatus.Visibility = ViewStates.Visible;
+                            Estatus.Text = $"🔘La solicitud ha sido Certificada";
+                            Certificada.Visibility = ViewStates.Visible;
+                            Certificada.Text = $"🔘La solicitud ha sido Certificada";
+                            Registrada.Visibility = ViewStates.Visible;
+                            Registrada.Text = $"🔘La solicitud ha sido Registrada";
+                        }
+                        else
+                        {
+                            /*if (Convert.ToInt32(ds.Tables[0].Rows[0]["validada_dgp"]) == 1)
+                            {
+                                //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
+                                Estatus.Visibility = ViewStates.Visible;
+                                Estatus.Text = "🔘 La solicitud ha sido balidada";
+                                Validada.Visibility = ViewStates.Visible;
+                                Validada.Text = "🔘 La solicitud ha sido balidada";
+                                Certificada.Visibility = ViewStates.Visible;
+                                Certificada.Text = $"🔘La solicitud ha sido Certificada";
+                                Registrada.Visibility = ViewStates.Visible;
+                                Registrada.Text = $"🔘La solicitud ha sido Registrada";
+                            }
+                            //Si la solicitud es certificada mandamos esto
+                            else */if (Convert.ToInt32(ds.Tables[0].Rows[0]["certificada_ur"]) == 1)
+                            {
+                                //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
+                                Estatus.Visibility = ViewStates.Visible;
+                                Estatus.Text = $"🔘La solicitud ha sido Certificada";
+                                Certificada.Visibility = ViewStates.Visible;
+                                Certificada.Text = $"🔘La solicitud ha sido Certificada";
+                                Registrada.Visibility = ViewStates.Visible;
+                                Registrada.Text = $"🔘La solicitud ha sido Registrada";
+                            }
+                        }
+                        //Si la solicitud es cancelada mandamos esto
+                        if (Convert.ToInt32(ds.Tables[0].Rows[0]["cancelada"]) == 1)
+                        {
+                            return 2;
+                        }
+                        //Si la solicitud es marcada como 0 entonces significa que fue cancelada
+                        else if (Convert.ToInt32(ds.Tables[0].Rows[0]["marcada"]) == 0)
+                        {
+                            
+                                return 5;
                         }
                         //Si la solicitud fue marcada como 1 significa que fue aceptada
                         else if (Convert.ToInt32(ds.Tables[0].Rows[0]["marcada"]) == 1)
@@ -268,48 +429,6 @@ namespace Mutation
                         return 0;
                     }
                 }
-                else if (this.Intent.GetIntExtra("Tipo", 0) == 1)
-                {
-                    if (Convert.ToInt32(ds.Tables[0].Rows[0]["solicitud_real"]) != 0)
-                    {
-                        if (Convert.ToInt32(ds.Tables[0].Rows[0]["cancelada"]) == 1)
-                        {
-                            return 2;
-                        }
-
-                        else if (Convert.ToInt32(ds.Tables[0].Rows[0]["marcada"]) == 0)
-                        {
-                            return 5;
-                        }
-                        else if (Convert.ToInt32(ds.Tables[0].Rows[0]["marcada"]) == 1)
-                        {
-                            return 6;
-                        }
-                        else if (Convert.ToInt32(ds.Tables[0].Rows[0]["certificada_ur"]) != null)
-                        {
-                            //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
-                            Estatus.Visibility = ViewStates.Visible;
-                            Estatus.Text = $"🔘La solicitud ha sido Certificada";
-                            return 4;
-                        }
-                        else if (ds.Tables[0].Rows[0]["validada_dgp"] != null)
-                        {
-                            //Si se ha recibido la solicitud se hara visible recibir y nos data una leyenda con día de llegada de solicitud
-                            Estatus.Visibility = ViewStates.Visible;
-                            Estatus.Text = "🔘 La solicitud ha sido validada";
-                            Observaciones.Text = $"     {ds.Tables[0].Rows[0]["validada_dgp"]}";
-                            return 3;
-                        }
-                        else
-                        {
-                            return 1;
-                        }
-                    }
-                    else
-                    {
-                        return 0;
-                    }
-                }
                 else
                 {
                     Toast.MakeText(this, $"Se ha detectado un error, comuníquese con departamento de sistemas", ToastLength.Long).Show();
@@ -317,7 +436,7 @@ namespace Mutation
                     return 10;
                 }
 
-            }
+           /* }
             catch (Exception ex)
             {
                 AlertDialog a1 = new AlertDialog.Builder(this).Create();
@@ -326,7 +445,7 @@ namespace Mutation
                 a1.SetButton("Aceptar", btnOK);
                 a1.Show();
                 return 10;
-            }
+            }*/
         }
 
         private void Asking_Click(object sender, EventArgs e)

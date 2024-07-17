@@ -50,6 +50,28 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="Cancelación">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="NoSolicitud" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Tipo" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelaciónResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CancelaciónResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="Revision">
         <s:complexType>
           <s:sequence>
@@ -117,6 +139,12 @@
   <wsdl:message name="InicioSoapOut">
     <wsdl:part name="parameters" element="tns:InicioResponse" />
   </wsdl:message>
+  <wsdl:message name="CancelaciónSoapIn">
+    <wsdl:part name="parameters" element="tns:Cancelación" />
+  </wsdl:message>
+  <wsdl:message name="CancelaciónSoapOut">
+    <wsdl:part name="parameters" element="tns:CancelaciónResponse" />
+  </wsdl:message>
   <wsdl:message name="RevisionSoapIn">
     <wsdl:part name="parameters" element="tns:Revision" />
   </wsdl:message>
@@ -141,6 +169,10 @@
     <wsdl:operation name="Inicio">
       <wsdl:input message="tns:InicioSoapIn" />
       <wsdl:output message="tns:InicioSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Cancelación">
+      <wsdl:input message="tns:CancelaciónSoapIn" />
+      <wsdl:output message="tns:CancelaciónSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="Revision">
       <wsdl:input message="tns:RevisionSoapIn" />
@@ -173,6 +205,15 @@
     </wsdl:operation>
     <wsdl:operation name="Inicio">
       <soap:operation soapAction="http://tempuri.org/Inicio" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Cancelación">
+      <soap:operation soapAction="http://tempuri.org/Cancelación" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -221,6 +262,15 @@
     </wsdl:operation>
     <wsdl:operation name="Inicio">
       <soap12:operation soapAction="http://tempuri.org/Inicio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Cancelación">
+      <soap12:operation soapAction="http://tempuri.org/Cancelación" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

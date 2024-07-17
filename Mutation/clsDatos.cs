@@ -95,5 +95,17 @@ namespace Mutation
             //regresamos el valor
             return ds;
         }
+        public DataSet Cancelacion(int NoSolicitud, int Tipo)
+        {
+            //Hacemos una conexion con el servicio en linea
+            Conexion.Mutation ws = new Conexion.Mutation();
+            //Generamos la variable para recibir una respuesta
+            DataSet ds;
+            //mandamos a pedir los datos al servidor con el cliente
+            ds = ws.Cancelación(NoSolicitud,Tipo);
+            //regresamos el valor
+            return ds;
+        }
+        
     }
 }

@@ -22,7 +22,7 @@ namespace Mutation
     public class AcInicio : Activity
     {
         DataSet ds = new DataSet();
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
@@ -74,16 +74,22 @@ namespace Mutation
                     //Si el resultado es 1 damos los resultados de que fue aceptada la solicitud
                     if (resultado == 2)
                     {
+                        //Función de conexion con el servidor
+                        clsDatos d = new clsDatos();
+                        //Enviamos valores para saber fecha de cancelación
+                        DataSet dsC = d.Cancelacion(this.Intent.GetIntExtra("Folio", 0), this.Intent.GetIntExtra("Tipo", 0));
+
+
                         //Hacemos visible la cancelación de la solicitud
                         confirmacion.Visibility = ViewStates.Visible;
                         //Damos la leyenda de cancelación
-                        confirmacion.Text = $"🔘La solicitud fue Cancelada";
+                        confirmacion.Text = $"🔘Su Solicitud de Cambio Fue Cancelada\nFecha de cancelación: {dsC.Tables[0].Rows[0]["f_cancelacion"].ToString()}";
                         //Hacemos visible la notificación (El lineart layout que dice si fuimos aceptados o no o cancelamos)
                         Notificacion.Visibility = ViewStates.Visible;
                         //Damos imagen de cancelado a la notificación
                         ImgNotificacion.SetImageResource(Resource.Drawable.Neutro);
                         //Damos titulo de concejo por cancelar
-                        TituloNotificacion.Text = "Si así lo descea puede hacer otra solicitud";
+                        TituloNotificacion.Text = $"La solicitud fue cancelada";
                         //Damos una leyenda con las obsercaciones al cancelar al usuario
                         Observaciones.Text = $"{ds.Tables[0].Rows[0]["observaciones_cancelacion"].ToString()}";
                     }
@@ -92,7 +98,7 @@ namespace Mutation
                         //Hacemos visible la Negativa
                         confirmacion.Visibility = ViewStates.Visible;
                         //Damos la leyenda de necación de solicitud
-                        confirmacion.Text = $"🔘La solicitud fue Denegada";
+                        confirmacion.Text = $"🔘Su Solicitud de Cambio Fue Denegada";
                         //Hacemos visible la notificación (El lineart layout que dice si fuimos aceptados o no o cancelamos)
                         Notificacion.Visibility = ViewStates.Visible;
                         //Damos la imagen de denegación de solicitud
@@ -100,14 +106,14 @@ namespace Mutation
                         //Damos titulo de negación
                         TituloNotificacion.Text = "Lastima";
                         //Damos leyenda de notificación de negación
-                        LeyendaNotificacion.Text = $"No has sido aceptado para transferencia";
+                        LeyendaNotificacion.Text = $"Su solicitud de cambio no ha podido ser aceptada {ds.Tables[0].Rows[0]["observaciones_rechazo"].ToString()}";
                     }
                     else if (resultado == 1)
                     {
                         //Hacemos visible la confirmación
                         confirmacion.Visibility = ViewStates.Visible;
                         //Damos la leyenda de confirmación
-                        confirmacion.Text = $"🔘La solicitud fue Aceptada";
+                        confirmacion.Text = $"🔘Su Solicitud de Cambio due  Aceptada";
                         //Hacemos visible la notificación (El lineart layout que dice si fuimos aceptados o no)
                         Notificacion.Visibility = ViewStates.Visible;
                         //Damos imagen de positivo a la notificación
@@ -115,20 +121,7 @@ namespace Mutation
                         //Damos titulo de ser correcta
                         TituloNotificacion.Text = "Felicidades!";
                         //Damos una leyenda feliciatando al usuario
-                        LeyendaNotificacion.Text = $"Has sido aceptado para transferencia";
-                    }
-                    else if (resultado == 0)
-                    {
-                        //Hacemos visible la confirmación
-                        confirmacion.Visibility = ViewStates.Visible;
-                        //Damos la leyenda de confirmación
-                        confirmacion.Text = $"🔘Tu solicitud sigue en revisión";
-                        //Hacemos visible la notificación (El lineart layout que dice si fuimos aceptados o no)
-                        Notificacion.Visibility = ViewStates.Visible;
-                        //Damos imagen de positivo a la notificación
-                        ImgNotificacion.SetImageResource(Resource.Drawable.Positivo);
-                        //Damos titulo de ser correcta
-                        TituloNotificacion.Text = "Por favor tenga paciencia";
+                        LeyendaNotificacion.Text = $"Su solicitud de cambio fue exitosa";
                     }
                 }
                 else if (this.Intent.GetIntExtra("Tipo", 0) == 1)
@@ -143,17 +136,23 @@ namespace Mutation
                     //Si el resultado es 1 damos los resultados de que fue aceptada la solicitud
                     if (resultado == 2)
                     {
-                        //Hacemos visible la confirmación
+                        //Función de conexion con el servidor
+                        clsDatos d = new clsDatos();
+                        //Enviamos valores para saber fecha de cancelación
+                        DataSet dsC = d.Cancelacion(this.Intent.GetIntExtra("Folio", 0), this.Intent.GetIntExtra("Tipo", 0));
+
+
+                        //Hacemos visible la cancelación de la solicitud
                         confirmacion.Visibility = ViewStates.Visible;
-                        //Damos la leyenda de confirmación
-                        confirmacion.Text = $"🔘La solicitud fue Cancelada";
-                        //Hacemos visible la notificación (El lineart layout que dice si fuimos aceptados o no)
+                        //Damos la leyenda de cancelación
+                        confirmacion.Text = $"🔘Su Solicitud de Cambio Fue Cancelada\nFecha de cancelación: {dsC.Tables[0].Rows[0]["f_cancelacion"].ToString()}";
+                        //Hacemos visible la notificación (El lineart layout que dice si fuimos aceptados o no o cancelamos)
                         Notificacion.Visibility = ViewStates.Visible;
-                        //Damos imagen de positivo a la notificación
+                        //Damos imagen de cancelado a la notificación
                         ImgNotificacion.SetImageResource(Resource.Drawable.Neutro);
-                        //Damos titulo de ser correcta
-                        TituloNotificacion.Text = "Si así lo descea puede hacer otra solicitud";
-                        //Damos una leyenda feliciatando al usuario
+                        //Damos titulo de concejo por cancelar
+                        TituloNotificacion.Text = $"La solicitud fue cancelada";
+                        //Damos una leyenda con las obsercaciones al cancelar al usuario
                         Observaciones.Text = $"{ds.Tables[0].Rows[0]["observaciones_cancelacion"].ToString()}";
                     }
                     else if (resultado == 0)
@@ -161,7 +160,7 @@ namespace Mutation
                         //Hacemos visible la confirmación
                         confirmacion.Visibility = ViewStates.Visible;
                         //Damos la leyenda de confirmación
-                        confirmacion.Text = $"🔘La solicitud fue Denegada";
+                        confirmacion.Text = $"🔘Su solicitud de Permuta Fue Denegada";
                         //Hacemos visible la notificación (El lineart layout que dice si fuimos aceptados o no)
                         Notificacion.Visibility = ViewStates.Visible;
                         //Damos la imagen de denegación de solicitud
@@ -169,14 +168,14 @@ namespace Mutation
                         //Damos titulo de negación
                         TituloNotificacion.Text = "Lastima";
                         //Damos leyenda de notificación de negación
-                        LeyendaNotificacion.Text = $"No has sido aceptado para transferencia";
+                        LeyendaNotificacion.Text = $"Lamentablemente su solicitud de permuta no fue exitosa";
                     }
                     else if (resultado == 1)
                     {
                         //Hacemos visible la confirmación
                         confirmacion.Visibility = ViewStates.Visible;
                         //Damos la leyenda de confirmación
-                        confirmacion.Text = $"🔘La solicitud fue Aceptada";
+                        confirmacion.Text = $"🔘Su Solicitud de Permuta Fue Aceptada";
                         //Hacemos visible la notificación (El lineart layout que dice si fuimos aceptados o no)
                         Notificacion.Visibility = ViewStates.Visible;
                         //Damos imagen de positivo a la notificación
@@ -184,20 +183,7 @@ namespace Mutation
                         //Damos titulo de ser correcta
                         TituloNotificacion.Text = "Felicidades!";
                         //Damos una leyenda feliciatando al usuario
-                        LeyendaNotificacion.Text = $"Has sido aceptado para transferencia";
-                    }
-                    else if (resultado == 0)
-                    {
-                        //Hacemos visible la confirmación
-                        confirmacion.Visibility = ViewStates.Visible;
-                        //Damos la leyenda de confirmación
-                        confirmacion.Text = $"🔘Tu solicitud sigue en revisión";
-                        //Hacemos visible la notificación (El lineart layout que dice si fuimos aceptados o no)
-                        Notificacion.Visibility = ViewStates.Visible;
-                        //Damos imagen de positivo a la notificación
-                        ImgNotificacion.SetImageResource(Resource.Drawable.Positivo);
-                        //Damos titulo de ser correcta
-                        TituloNotificacion.Text = "Por favor tenga paciencia";
+                        LeyendaNotificacion.Text = $"Su solicitud de permuta fue exitosa";
                     }
                     else if (resultado == 10)
                     {
@@ -236,95 +222,106 @@ namespace Mutation
             cancelada
              */
             clsDatos datos = new clsDatos();
-            ds = datos.Iniciar(this.Intent.GetIntExtra("Folio", 0), this.Intent.GetIntExtra("Tipo", 0));
-
-            //Indexados
-            TextView Observaciones = this.FindViewById<TextView>(Resource.Id.txtObservacionesDato);
-            TextView Real = this.FindViewById<TextView>(Resource.Id.txtInicioRegistrado);
-            TextView Certificada = this.FindViewById<TextView>(Resource.Id.txtInicioCertificada);
-            TextView Validada = this.FindViewById<TextView>(Resource.Id.txtInicioValidada);
-            if (this.Intent.GetIntExtra("Tipo", 0) == 0)
+            try
             {
-                //Si la solicitud es aceptada como real continuamos
-                //Si la solicitud es aceptada como real continuamos
-                if (Convert.ToInt32(ds.Tables[0].Rows[0]["solicitud_real"]) == 1)
-                {
-                    Real.Visibility = ViewStates.Visible;
-                    Real.Text = $"🔘La solicitud ha sido Verificada";
-                }
-                if (Convert.ToInt32(ds.Tables[0].Rows[0]["certificada_ur"]) == 1)
-                {
-                    Certificada.Visibility = ViewStates.Visible;
-                    Certificada.Text = $"🔘La solicitud ha sido Certificada {ds.Tables[0].Rows[0]["f_certificacion_ur"].ToString()}";
-                }
-                if (Convert.ToInt32(ds.Tables[0].Rows[0]["validada_dgp"]) == 1)
-                {
-                    Validada.Visibility = ViewStates.Visible;
-                    Validada.Text = $"🔘La solicitud ha sido Validada{ds.Tables[0].Rows[0]["f_validacion_dgp"].ToString()}";
-                }
-                if (Convert.ToInt32(ds.Tables[0].Rows[0]["cancelada"]) == 1)
-                {
-                    return 2;
-                }
-                //Si la solicitud es marcada como 0 entonces significa que fue cancelada
-                else if (Convert.ToInt32(ds.Tables[0].Rows[0]["marcada"]) == 0)
-                {
+                ds = datos.Iniciar(this.Intent.GetIntExtra("Folio", 0), this.Intent.GetIntExtra("Tipo", 0));
 
-                    return 0;
-                }
-                //Si la solicitud fue marcada como 1 significa que fue aceptada
-                else if (Convert.ToInt32(ds.Tables[0].Rows[0]["marcada"]) == 1)
+                //Indexados
+                TextView Observaciones = this.FindViewById<TextView>(Resource.Id.txtObservacionesDato);
+                TextView Real = this.FindViewById<TextView>(Resource.Id.txtInicioRegistrado);
+                TextView Certificada = this.FindViewById<TextView>(Resource.Id.txtInicioCertificada);
+                TextView Validada = this.FindViewById<TextView>(Resource.Id.txtInicioValidada);
+                if (this.Intent.GetIntExtra("Tipo", 0) == 0)
                 {
-                    return 1;
+                    //Si la solicitud es aceptada como real continuamos
+                    if (Convert.ToInt32(ds.Tables[0].Rows[0]["solicitud_real"]) == 1)
+                    {
+                        Real.Visibility = ViewStates.Visible;
+                        Real.Text = $"🔘La solicitud ha sido Verificada {ds.Tables[0].Rows[0]["f_registro"].ToString()}";
+                    }
+                    if (Convert.ToInt32(ds.Tables[0].Rows[0]["certificada_ur"]) == 1)
+                    {
+                        Certificada.Visibility = ViewStates.Visible;
+                        Certificada.Text = $"🔘La solicitud ha sido Certificada";
+                    }
+                    if (Convert.ToInt32(ds.Tables[0].Rows[0]["validada_dgp"]) == 1)
+                    {
+                        Validada.Visibility = ViewStates.Visible;
+                        Validada.Text = $"🔘La solicitud ha sido Validada{ds.Tables[0].Rows[0]["f_validacion_dgp"].ToString()}\n{ds.Tables[0].Rows[0]["observaciones_dgp"].ToString()}";
+                    }
+                    if (Convert.ToInt32(ds.Tables[0].Rows[0]["cancelada"]) == 1)
+                    {
+                        return 2;
+                    }
+                    //Si la solicitud es marcada como 0 entonces significa que fue cancelada
+                    else if (Convert.ToInt32(ds.Tables[0].Rows[0]["marcada"]) == 0)
+                    {
+
+                        return 0;
+                    }
+                    //Si la solicitud fue marcada como 1 significa que fue aceptada
+                    else if (Convert.ToInt32(ds.Tables[0].Rows[0]["marcada"]) == 1)
+                    {
+                        return 1;
+                    }
+                    //Si nada de esto se cumple mandamos esto
+                    else { return 10; }
                 }
-                //Si nada de esto se cumple mandamos esto
-                else { return 10; }
+                else if (this.Intent.GetIntExtra("Tipo", 0) == 1)
+                {
+                    //Si la solicitud es aceptada como real continuamos
+                    if (Convert.ToInt32(ds.Tables[0].Rows[0]["solicitud_real"]) == 1)
+                    {
+                        Real.Visibility = ViewStates.Visible;
+                        Real.Text = $"🔘La solicitud ha sido Verificada {ds.Tables[0].Rows[0]["f_registro"].ToString()}";
+                    }
+                    if (Convert.ToInt32(ds.Tables[0].Rows[0]["certificada_ur"]) == 1)
+                    {
+                        Certificada.Visibility = ViewStates.Visible;
+                        Certificada.Text = $"🔘La solicitud ha sido Certificada {ds.Tables[0].Rows[0]["f_certificacion_ur"].ToString()}\n{ds.Tables[0].Rows[0]["observacion_ur"].ToString()}";
+                    }
+                    if (Convert.ToInt32(ds.Tables[0].Rows[0]["validada_dgp"]) == 1)
+                    {
+                        Validada.Visibility = ViewStates.Visible;
+                        Validada.Text = $"🔘La solicitud ha sido Validada{ds.Tables[0].Rows[0]["f_validacion_dgp"].ToString()}\n{ds.Tables[0].Rows[0]["observaciones_dgp"].ToString()}";
+                    }
+                    if (Convert.ToInt32(ds.Tables[0].Rows[0]["cancelada"]) == 1)
+                    {
+                        return 2;
+                    }
+                    //Si la solicitud es marcada como 0 entonces significa que fue cancelada
+                    else if (Convert.ToInt32(ds.Tables[0].Rows[0]["marcada"]) == 0)
+                    {
+
+                        return 0;
+                    }
+                    //Si la solicitud fue marcada como 1 significa que fue aceptada
+                    else if (Convert.ToInt32(ds.Tables[0].Rows[0]["marcada"]) == 1)
+                    {
+                        return 1;
+                    }
+                    //Si nada de esto se cumple mandamos esto
+                    else { return 10; }
+
+                }
+                else
+                {
+                    Toast.MakeText(this, $"Se ha detectado un error, comuníquese con departamento de sistemas", ToastLength.Long).Show();
+                    Finish();
+                    return 10;
+                }
             }
-            else if (this.Intent.GetIntExtra("Tipo", 0) == 1)
+            catch (Exception ex)
             {
-                //Si la solicitud es aceptada como real continuamos
-                if (Convert.ToInt32(ds.Tables[0].Rows[0]["solicitud_real"]) == 1)
-                {
-                    Real.Visibility = ViewStates.Visible;
-                    Real.Text = $"🔘La solicitud ha sido Verificada";
-                }
-                if (Convert.ToInt32(ds.Tables[0].Rows[0]["certificada_ur"]) == 1)
-                {
-                    Certificada.Visibility = ViewStates.Visible;
-                    Certificada.Text = $"🔘La solicitud ha sido Certificada {ds.Tables[0].Rows[0]["f_certificacion_ur"].ToString()}";
-                }
-                if (ds.Tables[0].Rows[0]["validada_dgp"].ToString() != "0000-00-00 00:00:00")
-                {
-                    Validada.Visibility = ViewStates.Visible;
-                    Validada.Text = $"🔘La solicitud ha sido Validada {ds.Tables[0].Rows[0]["f_validacion_dgp"].ToString()}";
-                }
-                if (Convert.ToInt32(ds.Tables[0].Rows[0]["cancelada"]) == 1)
-                {
-                    return 2;
-                }
-                //Si la solicitud es marcada como 0 entonces significa que fue cancelada
-                else if (Convert.ToInt32(ds.Tables[0].Rows[0]["marcada"]) == 0)
-                {
-
-                    return 0;
-                }
-                //Si la solicitud fue marcada como 1 significa que fue aceptada
-                else if (Convert.ToInt32(ds.Tables[0].Rows[0]["marcada"]) == 1)
-                {
-                    return 1;
-                }
-                //Si nada de esto se cumple mandamos esto
-                else { return 10; }
-
-            }
-            else
-            {
-                Toast.MakeText(this, $"Se ha detectado un error, comuníquese con departamento de sistemas", ToastLength.Long).Show();
-                Finish();
-                return 10;
+                AlertDialog a1 = new AlertDialog.Builder(this).Create();
+                a1.SetTitle("Alerta!");
+                a1.SetMessage("Ha ocurrido un error en el sistema, intente más tarde.");
+                a1.SetButton("Aceptar", btnOK);
+                a1.Show();
             }
 
             return 10;
+
         }
     }
 }

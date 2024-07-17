@@ -49,15 +49,15 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtInicioConfirmacion"
-            android:layout_marginBottom="51.0dp" />
+            android:id="@+id/txtInicioCertificada"
+            android:visibility="invisible"
+            android:layout_marginBottom="40.5dp" />
         <TextView
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtInicioCertificada"
-            android:visibility="invisible"
-            android:layout_marginBottom="40.5dp" />
+            android:id="@+id/txtInicioConfirmacion"
+            android:layout_marginBottom="51.0dp" />
         <TextView
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"

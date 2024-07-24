@@ -106,7 +106,7 @@ namespace Mutation
                         //Damos titulo de negación
                         TituloNotificacion.Text = "Lastima";
                         //Damos leyenda de notificación de negación
-                        LeyendaNotificacion.Text = $"Su solicitud de cambio no ha podido ser aceptada {ds.Tables[0].Rows[0]["observaciones_rechazo"].ToString()}";
+                        LeyendaNotificacion.Text = $"Su solicitud de cambio no ha podido ser aceptada {ds.Tables[0].Rows[0]["obsevaciones"].ToString()}";
                     }
                     else if (resultado == 1)
                     {
@@ -121,7 +121,7 @@ namespace Mutation
                         //Damos titulo de ser correcta
                         TituloNotificacion.Text = "Felicidades!";
                         //Damos una leyenda feliciatando al usuario
-                        LeyendaNotificacion.Text = $"Su solicitud de cambio fue exitosa";
+                        LeyendaNotificacion.Text = $"Su solicitud de cambio fue exitosa {ds.Tables[0].Rows[0]["obsevaciones"].ToString()}";
                     }
                 }
                 else if (this.Intent.GetIntExtra("Tipo", 0) == 1)
@@ -168,7 +168,7 @@ namespace Mutation
                         //Damos titulo de negación
                         TituloNotificacion.Text = "Lastima";
                         //Damos leyenda de notificación de negación
-                        LeyendaNotificacion.Text = $"Lamentablemente su solicitud de permuta no fue exitosa";
+                        LeyendaNotificacion.Text = $"Lamentablemente su solicitud de permuta no fue exitosa {ds.Tables[0].Rows[0]["obsevaciones"].ToString()}";
                     }
                     else if (resultado == 1)
                     {
@@ -183,7 +183,7 @@ namespace Mutation
                         //Damos titulo de ser correcta
                         TituloNotificacion.Text = "Felicidades!";
                         //Damos una leyenda feliciatando al usuario
-                        LeyendaNotificacion.Text = $"Su solicitud de permuta fue exitosa";
+                        LeyendaNotificacion.Text = $"Su solicitud de permuta fue exitosa {ds.Tables[0].Rows[0]["obsevaciones"].ToString()}";
                     }
                     else if (resultado == 10)
                     {
@@ -242,7 +242,7 @@ namespace Mutation
                     if (Convert.ToInt32(ds.Tables[0].Rows[0]["certificada_ur"]) == 1)
                     {
                         Certificada.Visibility = ViewStates.Visible;
-                        Certificada.Text = $"🔘La solicitud ha sido Certificada";
+                        Certificada.Text = $"🔘La solicitud ha sido Certificada {ds.Tables[0].Rows[0]["f_cetificada_ur"].ToString()}";
                     }
                     if (Convert.ToInt32(ds.Tables[0].Rows[0]["validada_dgp"]) == 1)
                     {

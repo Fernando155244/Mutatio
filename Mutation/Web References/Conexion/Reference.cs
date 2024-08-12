@@ -46,7 +46,7 @@ namespace Mutation.Conexion {
         
         /// <remarks/>
         public Mutation() {
-            this.Url = "http://10.3.47.82:81/ServerMutation/Mutation.asmx";
+            this.Url = "http://10.3.47.82:81/ServerMutation/mutation.asmx";
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;

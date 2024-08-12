@@ -33,19 +33,22 @@
             android:minWidth="25px"
             android:minHeight="25px"
             android:id="@+id/lblPreguntasTitulo"
-            android:gravity="center" />
+            android:gravity="center" 
+            android:textSize="90px"/>
         <TextView
             android:text=""
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/txtPreguntasDatos" />
+            android:id="@+id/txtPreguntasDatos" 
+            android:textSize="80px"/>
         <TextView
             android:text="Para más información comuniquese al correo: cambiosinter@nube.sep.gob.mx"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lblContactos" />
+            android:id="@+id/lblContactos" 
+            android:textSize="80px"/>
 
     </LinearLayout>
 </ScrollView>

@@ -52,10 +52,10 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidPackageFormat>aab</AndroidPackageFormat>
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
-    <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <AotAssemblies>false</AotAssemblies>
     <EnableLLVM>false</EnableLLVM>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
@@ -93,7 +93,7 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
-    <None Include="Web References\Conexion\Mutation.wsdl" />
+    <None Include="Web References\Conexion\mutation.wsdl" />
     <None Include="Web References\Conexion\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -202,16 +202,16 @@
     <AndroidResource Include="Resources\drawable\Neutro.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <None Include="Web References\Conexion\Mutation.disco" />
+    <None Include="Web References\Conexion\mutation.disco" />
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://10.3.47.82:81/ServerMutation/Mutation.asmx">
+    <WebReferenceUrl Include="http://10.3.47.82:81/ServerMutation/mutation.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\Conexion\</RelPath>
-      <UpdateFromURL>http://10.3.47.82:81/ServerMutation/Mutation.asmx</UpdateFromURL>
+      <UpdateFromURL>http://10.3.47.82:81/ServerMutation/mutation.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>

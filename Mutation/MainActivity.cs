@@ -28,7 +28,9 @@ namespace Mutation
                 ImageView Logo = this.FindViewById<ImageView>(Resource.Id.imgLoginLogo);
             Button btnLogin = this.FindViewById<Button>(Resource.Id.btnLoginStart);
             Spinner spTipo = this.FindViewById<Spinner>(Resource.Id.spLoginTipoDato);
-            
+            TextView Asking = this.FindViewById<TextView>(Resource.Id.lblLoginPregutnas);
+            Asking.Click += Asking_Click;
+
             //Definición de valor
             Logo.SetImageResource(Resource.Drawable.Logo);
             //Función del boton
@@ -121,7 +123,6 @@ namespace Mutation
         {
             Spinner spTipo = this.FindViewById<Spinner>(Resource.Id.spLoginTipoDato);
             ArrayAdapter spInteres = new ArrayAdapter(this, Android.Resource.Layout.SimpleSpinnerItem);
-
             //Agregamos los valores de la tabla al arrayAdapter 
             spInteres.Add("Cambios");
             spInteres.Add("Permutas");
@@ -134,5 +135,10 @@ namespace Mutation
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+        private void Asking_Click(object sender, EventArgs e)
+        {
+            StartActivity(typeof(AcPreguntas));
+        }
     }
+
 }

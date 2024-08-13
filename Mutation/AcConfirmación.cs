@@ -66,7 +66,7 @@ namespace Mutation
                     Nombre.Text = $"{ds.Tables[0].Rows[0]["paterno"].ToString()} {ds.Tables[0].Rows[0]["materno"].ToString()} {ds.Tables[0].Rows[0]["nombres"].ToString()}";
                     Actual.Text = $"{ds.Tables[0].Rows[0]["Actual"].ToString()}";
                     Opcion1.Text = $"{ds.Tables[0].Rows[0]["Opcion"].ToString()}";
-                    Opcion2.Text = $"Null";
+                    Opcion2.Text = $"";
                     Nivel.Text = $"{ds.Tables[0].Rows[0]["nivel"].ToString()}";
                 }
             }
